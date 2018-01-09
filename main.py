@@ -2,12 +2,21 @@ import json
 from pprint import pprint
 
 
+def get_videos_from_content_items(content_items):
+    result = []
+    for ci in content_items:
+        if 'youtubeId' not in ci:
+            continue
+        result.append((ci['title'], ci['description'], ci['youtubeId']))
+    return result
+
+
 def get_videos_from_tutorials(tutorials):
     videos = []
     for t in tutorials:
         videos.append({
             'title': t['title'],
-            'videos': [ci for ci in t['contentItems']]})
+            'videos': get_videos_from_content_items(t['contentItems'])})
     return videos
 
 
