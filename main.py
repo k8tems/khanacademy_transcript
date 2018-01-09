@@ -23,15 +23,19 @@ def serialize_tutorials(tutorials):
     return videos
 
 
-def parse_tutorials(url):
-    resp = requests.get(url)
-    re.search('', resp.text)
+def parse_tutorials(data):
+    re.search('', data)
     return []
+
+
+def get_tutorials(url):
+    resp = requests.get(url)
+    return parse_tutorials(resp.text)
 
 
 def parse():
     url = 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'
-    tutorials = parse_tutorials(url)
+    tutorials = get_tutorials(url)
     videos = serialize_tutorials(tutorials)
     pprint(videos)
 
