@@ -24,8 +24,9 @@ def serialize_tutorials(tutorials):
 
 
 def parse_tutorials(data):
-    re.search('', data)
-    return []
+    regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', data)
+    data = json.loads(regex.group(1))
+    return data['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
 
 def get_tutorials(url):
