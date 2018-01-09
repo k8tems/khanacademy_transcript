@@ -1,4 +1,6 @@
+import re
 import json
+import requests
 from pprint import pprint
 
 
@@ -21,13 +23,15 @@ def parse_tutorials(tutorials):
     return videos
 
 
-def get_tutorials(url):
+def parse_tutorials_data(url):
+    resp = requests.get(url)
+    re.search('', resp.text)
     return []
 
 
 def parse():
     url = 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'
-    tutorials = get_tutorials(url)
+    tutorials = parse_tutorials_data(url)
     videos = parse_tutorials(tutorials)
     pprint(videos)
 
