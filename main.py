@@ -9,10 +9,10 @@ def get_videos_from_content_items(t):
 
 
 def get_videos_from_tutorials(tutorials):
-    video_ids = []
+    videos = []
     for t in tutorials:
-        video_ids += get_videos_from_content_items(t)
-    return video_ids
+        videos += get_videos_from_content_items(t)
+    return videos
 
 
 def parse():
