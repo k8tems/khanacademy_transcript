@@ -60,10 +60,14 @@ def main():
     """
     modules = [{
         'title': 'Vectors and spaces',
-        'contents': [{'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}]}]
+        'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}, {
+        'title': 'Matrix transformations',
+        'url': 'https://www.khanacademy.org/math/linear-algebra/matrix-transformations'}, {
+        'title': 'Alternate coordinate systems(bases)',
+        'url': 'https://www.khanacademy.org/math/linear-algebra/alternate-bases',
+    }]
     for m in modules:
-        for c in m['contents']:
-            c['tutorials'] = get_tutorials(c['url'])
+        m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
 
 
