@@ -10,6 +10,11 @@ def download_transcript(video_id):
     return resp.text
 
 
+def create_dir(dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+
 if __name__ == '__main__':
     with open('tutorials.json') as f:
         modules = json.loads(f.read())
@@ -20,8 +25,7 @@ if __name__ == '__main__':
             for v in t['videos']:
                 print('\t', v[0], v[2])
                 transcript = download_transcript(v[2])
-                if not os.path.exists(module_title):
-                    os.makedirs(module_title)
+                create_dir(module_title)
                 dest = os.path.join(module_title, t['title'] + '.xml')
                 with open(dest, 'w') as f:
                     f.write(transcript)
