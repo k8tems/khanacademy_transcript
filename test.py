@@ -2,7 +2,7 @@ import unittest
 import main
 
 
-class TestExtractTutorials(unittest.TestCase):
+class TestExtractReactComponent(unittest.TestCase):
     def test(self):
         with open('fixture.html') as f:
             data = f.read()
