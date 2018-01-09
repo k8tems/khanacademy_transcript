@@ -27,12 +27,12 @@ class ReactComponentNotFound(RuntimeError):
     pass
 
 
-def parse_tutorials(data):
-    regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', data)
+def parse_tutorials(page_source):
+    regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', page_source)
     if not regex:
-        raise ReactComponentNotFound(data)
-    data = json.loads(regex.group(1))
-    return data['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
+        raise ReactComponentNotFound(page_source)
+    component = json.loads(regex.group(1))
+    return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
 
 def get_tutorials(url):
