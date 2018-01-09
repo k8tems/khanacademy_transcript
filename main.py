@@ -4,9 +4,9 @@ import json
 def get_videos_from_tutorials(tutorials):
     videos = []
     for t in tutorials:
-        videos += {
+        videos.append({
             'title': t['title'],
-            'videos': [ci for ci in t['contentItems']]}
+            'videos': [ci for ci in t['contentItems']]})
     return videos
 
 
