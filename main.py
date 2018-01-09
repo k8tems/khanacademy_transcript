@@ -50,12 +50,13 @@ def download_tutorials(url):
 
 def get_tutorials(url):
     tutorials = download_tutorials(url)
-    videos = serialize_tutorials(tutorials)
-    pprint(videos)
+    return serialize_tutorials(tutorials)
 
 
 def main():
-    get_tutorials('https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces')
+    topics = [{'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}]
+    for t in topics:
+        t['tutorials'] = get_tutorials(t['url'])
 
 
 if __name__ == '__main__':
