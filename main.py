@@ -28,6 +28,10 @@ class ReactComponentNotFound(RuntimeError):
 
 
 def parse_tutorials(page_source):
+    """
+    Extract tutorial json from the given page source
+    This will only work if the `ReactComponent` is defined in one line
+    """
     regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', page_source)
     if not regex:
         raise ReactComponentNotFound(page_source)
