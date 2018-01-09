@@ -69,7 +69,7 @@ def main():
     for m in modules:
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
-    with open('tutorials.json') as f:
+    with open('tutorials.json', 'w') as f:
         f.write(json.dumps(modules))
 
 
