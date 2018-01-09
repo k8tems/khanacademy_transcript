@@ -1,0 +1,15 @@
+<script>
+(function() {
+    var React = KAdefine.require("react");
+    var ReactDOM = KAdefine.require("react-dom");
+    var ApolloWrapper = React.createFactory(KAdefine.require(
+        "./javascript/apollo-package/apollo-wrapper.jsx"));
+    var Component = KAdefine.require("./javascript/app-shell-package/app.jsx");
+    var ReactComponent = React.createFactory(
+        Component.default || Component);
+    ReactDOM.render(ApolloWrapper({
+        initialState: null,
+        children: ReactComponent({"componentProps": [{"foo": "bar}]})
+    }), document.getElementById("_kareact_0"));
+})();
+</script>
