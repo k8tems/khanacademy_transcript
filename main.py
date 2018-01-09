@@ -27,7 +27,7 @@ class ReactComponentNotFound(RuntimeError):
     pass
 
 
-def parse_tutorials(page_source):
+def extract_tutorials(page_source):
     """
     Extract tutorial json from the given page source
     This will only work if the `ReactComponent` is defined in one line
@@ -41,7 +41,7 @@ def parse_tutorials(page_source):
 
 def get_tutorials(url):
     resp = requests.get(url)
-    return parse_tutorials(resp.text)
+    return extract_tutorials(resp.text)
 
 
 def parse():
