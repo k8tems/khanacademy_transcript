@@ -5,6 +5,7 @@ from pprint import pprint
 def get_videos_from_content_items(content_items):
     result = []
     for ci in content_items:
+        # practice nodes do not have videos
         if 'youtubeId' not in ci:
             continue
         result.append((ci['title'], ci['description'], ci['youtubeId']))
