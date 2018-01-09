@@ -23,8 +23,14 @@ def serialize_tutorials(tutorials):
     return videos
 
 
+class ReactComponentNotFound(RuntimeError):
+    pass
+
+
 def parse_tutorials(data):
     regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', data)
+    if not regex:
+        raise ReactComponentNotFound(data)
     data = json.loads(regex.group(1))
     return data['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
