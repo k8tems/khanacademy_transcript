@@ -43,13 +43,13 @@ def extract_tutorials(page_source):
     return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
 
-def get_tutorials(url):
+def download_tutorials(url):
     resp = requests.get(url)
     return extract_tutorials(resp.text)
 
 
 def parse(url):
-    tutorials = get_tutorials(url)
+    tutorials = download_tutorials(url)
     videos = serialize_tutorials(tutorials)
     pprint(videos)
 
