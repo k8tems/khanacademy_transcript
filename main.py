@@ -48,15 +48,14 @@ def get_tutorials(url):
     return extract_tutorials(resp.text)
 
 
-def parse():
-    url = 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'
+def parse(url):
     tutorials = get_tutorials(url)
     videos = serialize_tutorials(tutorials)
     pprint(videos)
 
 
 def main():
-    parse()
+    parse('https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces')
 
 
 if __name__ == '__main__':
