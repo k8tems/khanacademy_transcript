@@ -1,17 +1,10 @@
 import json
 
 
-def get_videos_from_content_items(t):
-    result = []
-    for node in t['contentItems']:
-        result.append(node)
-    return result
-
-
 def get_videos_from_tutorials(tutorials):
     videos = []
     for t in tutorials:
-        videos += get_videos_from_content_items(t)
+        videos += [node for node in t['contentItems']]
     return videos
 
 
