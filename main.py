@@ -21,10 +21,13 @@ def parse_tutorials(tutorials):
     return videos
 
 
+def get_tutorials(url):
+    return []
+
+
 def parse():
-    with open('input.json', 'r') as f:
-        data = json.loads(f.read())
-    tutorials = data['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
+    url = 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'
+    tutorials = get_tutorials(url)
     videos = parse_tutorials(tutorials)
     pprint(videos)
 
