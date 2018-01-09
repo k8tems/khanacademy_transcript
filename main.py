@@ -54,9 +54,17 @@ def get_tutorials(url):
 
 
 def main():
-    topics = [{'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}]
-    for t in topics:
-        t['tutorials'] = get_tutorials(t['url'])
+    """
+    Download tutorials of every content in every module
+    eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
+    """
+    modules = [{
+        'title': 'Vectors and spaces',
+        'contents': [{'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}]}]
+    for m in modules:
+        for c in m['contents']:
+            c['tutorials'] = get_tutorials(c['url'])
+    pprint(modules)
 
 
 if __name__ == '__main__':
