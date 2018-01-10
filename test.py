@@ -54,7 +54,7 @@ class TestParseTranscript(unittest.TestCase):
 
 class TestFormatStart(unittest.TestCase):
     def test(self):
-        self.assertEqual('15:32', parse_transcripts.format_start('932'))
+        self.assertEqual('15:32', parse_transcripts.format_start(932))
 
 
 if __name__ == '__main__':

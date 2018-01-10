@@ -13,8 +13,8 @@ def write_text(fname, text):
         f.write(text)
 
 
-def format_start():
-    pass
+def format_start(start):
+    int(start)
 
 
 def parse_transcript(xml_transcript):
@@ -25,7 +25,7 @@ def parse_transcript(xml_transcript):
         text = child.text or ''
         text = text.replace('\n', '\\n')
         text = html.unescape(text)
-        start = format_start(child.attrib['start'])
+        start = format_start(int(child.attrib['start']))
         result += '%s%s\n' % (start.ljust(7), text)
     return result
 
