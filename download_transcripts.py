@@ -25,8 +25,9 @@ if __name__ == '__main__':
             for v in t['videos']:
                 print('\t', v[0], v[2])
                 transcript = download_transcript(v[2])
-                create_dir(module_title)
-                dest = os.path.join(module_title, t['title'] + '.xml')
+                dest_dir = os.path.join('transcripts', module_title)
+                create_dir(dest_dir)
+                dest = os.path.join(dest_dir, t['title'] + '.xml')
                 with open(dest, 'w') as f:
                     f.write(transcript)
                 a
