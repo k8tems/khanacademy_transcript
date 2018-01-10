@@ -43,6 +43,14 @@ class TestParseTranscript(unittest.TestCase):
         expected = '0         foo\\nbar\\nbaz\n1         qux\n'
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
 
+    def test_unescape_html(self):
+        transcript = '<?xml version="1.0" encoding="utf-8" ?>' \
+                     '<transcript>' \
+                     '<text start="0" dur="1">fo&amp;#39;o</text>' \
+                     '</transcript>'
+        expected = '0         fo\'o\n'
+        self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
+
 
 if __name__ == '__main__':
     unittest.main()
