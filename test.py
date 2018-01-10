@@ -6,9 +6,22 @@ import parse_transcripts
 
 class TestExtractReactComponent(unittest.TestCase):
     def test(self):
-        with open(os.path.join('fixtures', 'react_component.html')) as f:
-            data = f.read()
-        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_tutorials.extract_react_component(data))
+        fixture = '''<script>
+(function() {
+    var React = KAdefine.require("react");
+    var ReactDOM = KAdefine.require("react-dom");
+    var ApolloWrapper = React.createFactory(KAdefine.require(
+        "./javascript/apollo-package/apollo-wrapper.jsx"));
+    var Component = KAdefine.require("./javascript/app-shell-package/app.jsx");
+    var ReactComponent = React.createFactory(
+        Component.default || Component);
+    ReactDOM.render(ApolloWrapper({
+        initialState: null,
+        children: ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})
+    }), document.getElementById("_kareact_0"));
+})();
+</script>'''
+        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_tutorials.extract_react_component(fixture))
 
     def test_component_not_found(self):
         data = '<script></script>'
