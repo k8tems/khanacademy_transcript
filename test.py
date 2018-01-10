@@ -36,9 +36,12 @@ class TestParseTranscript(unittest.TestCase):
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
 
     def test_collapse_multiple_lines(self):
-        transcript = '<?xml version="1.0" encoding="utf-8" ?><transcript>' \
-                     '<text start="0" dur="1">foo\nbar\nbaz</text></transcript>'
-        expected = '0     foo\\nbar\\nbaz\\n'
+        transcript = '<?xml version="1.0" encoding="utf-8" ?>' \
+                     '<transcript>' \
+                     '<text start="0" dur="1">foo\nbar\nbaz</text>' \
+                     '<text start="1" dur="1">qux</text>' \
+                     '</transcript>'
+        expected = '0     foo\\nbar\\nbaz\n1     qux\n'
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
 
 

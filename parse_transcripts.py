@@ -18,8 +18,9 @@ def parse_transcript(xml_transcript):
     for child in root:
         # Make sure to convert `None` to ''
         text = child.text or ''
+        text = text.replace('\n', '\\n')
         result += '%s%s\n' % (child.attrib['start'].ljust(6), text)
-    return result.replace('\n', '\\n')
+    return result
 
 
 def create_dir(dir_name):
