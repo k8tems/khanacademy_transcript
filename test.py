@@ -30,7 +30,7 @@ class TestExtractReactComponent(unittest.TestCase):
 class TestParseTranscript(unittest.TestCase):
     def test(self):
         transcript = '<?xml version="1.0" encoding="utf-8" ?><transcript>' \
-                     '<text start="0" dur="0.83"></text><text start="1.1" dur="5.01">bar</text></transcript>'
+                     '<text start="0" dur="0.83"></text><text start="1" dur="5.01">bar</text></transcript>'
         expected = '00:00  \n00:01  bar\n'
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
 
@@ -50,6 +50,11 @@ class TestParseTranscript(unittest.TestCase):
                      '</transcript>'
         expected = '00:00  fo\'o\n'
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
+
+
+class TestFormatStart(unittest.TestCase):
+    def test(self):
+        self.assertEqual('15:32', parse_transcripts.format_start('932'))
 
 
 if __name__ == '__main__':
