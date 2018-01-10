@@ -1,4 +1,5 @@
 import os
+import xml.etree.ElementTree as ET
 
 
 def read_text(fname):
@@ -7,7 +8,13 @@ def read_text(fname):
 
 
 def parse_transcript(xml_transcript):
-    pass
+    result = ''
+    root = ET.fromstring(xml_transcript)
+    for child in root:
+        # Make sure to convert `None` to ''
+        text = child.text or ''
+        result += '%s%s\n' % (child.attrib['start'].ljust(6), text)
+    return result
 
 
 if __name__ == '__main__':
