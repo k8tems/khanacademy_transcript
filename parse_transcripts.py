@@ -14,9 +14,7 @@ def write_text(fname, text):
 
 
 def format_start(start):
-    min = start // 60
-    sec = start % 60
-    return '%02d:%02d' % (min, sec)
+    return '%02d:%02d' % (start // 60, start % 60)
 
 
 def parse_transcript(xml_transcript):
