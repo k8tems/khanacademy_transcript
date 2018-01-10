@@ -26,10 +26,11 @@ if __name__ == '__main__':
                 print('\t', v[0], v[2])
                 dest_dir = os.path.join('transcripts', 'xml', module_title, t['title'])
                 create_dir(dest_dir)
-                dest_file = os.path.join(dest_dir, v[0] + '.xml')
+                dest_file = os.path.join(dest_dir, v[0].replace('/', '_') + '.xml')
                 # Skip if already downloaded
                 if os.path.exists(dest_file):
                     continue
+
                 transcript = download_transcript(v[2])
                 with open(dest_file, 'w') as f:
                     f.write(transcript)
