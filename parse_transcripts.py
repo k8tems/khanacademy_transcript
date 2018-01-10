@@ -44,7 +44,7 @@ if __name__ == '__main__':
             for t in tutorials:
                 print('\t\t', t)
                 xml_transcript = read_text(os.path.join(xml_dir, md, cd, t))
-                # Sometimes the transcript is empty; Maybe try again?
+                # Sometimes the transcript is empty; Maybe try downloading again?
                 if not xml_transcript:
                     continue
                 txt_transcript = parse_transcript(xml_transcript)
