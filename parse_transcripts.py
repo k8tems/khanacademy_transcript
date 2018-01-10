@@ -19,7 +19,7 @@ def parse_transcript(xml_transcript):
         # Make sure to convert `None` to ''
         text = child.text or ''
         text = text.replace('\n', '\\n')
-        result += '%s%s\n' % (child.attrib['start'].ljust(6), text)
+        result += '%s%s\n' % (child.attrib['start'].ljust(10), text)
     return result
 
 
