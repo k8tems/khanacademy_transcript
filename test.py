@@ -1,4 +1,3 @@
-import os
 import unittest
 import download_tutorials
 import parse_transcripts
