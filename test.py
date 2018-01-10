@@ -1,10 +1,11 @@
+import os
 import unittest
 import download_tutorials
 
 
 class TestExtractReactComponent(unittest.TestCase):
     def test(self):
-        with open('fixture.html') as f:
+        with open(os.path.join('fixtures', 'react_component.html')) as f:
             data = f.read()
         self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_tutorials.extract_react_component(data))
 
