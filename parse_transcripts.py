@@ -28,7 +28,7 @@ def parse_transcript(xml_transcript):
         # Explicit newlines hinder search; using space instead
         text = text.replace('\n', ' ')
         text = html.unescape(text)
-        start = format_start(int(child.attrib['start']))
+        start = format_start(int(float(child.attrib['start'])))
         result += '%s%s\n' % (start.ljust(7), text)
     return result
 
