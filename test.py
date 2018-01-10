@@ -40,7 +40,7 @@ class TestParseTranscript(unittest.TestCase):
                      '<text start="0" dur="1">foo\nbar\nbaz</text>' \
                      '<text start="1" dur="1">qux</text>' \
                      '</transcript>'
-        expected = '00:00  foo\\nbar\\nbaz\n00:01  qux\n'
+        expected = '00:00  foo bar baz\n00:01  qux\n'
         self.assertEqual(expected, parse_transcripts.parse_transcript(transcript))
 
     def test_unescape_html(self):

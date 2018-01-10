@@ -25,7 +25,8 @@ def parse_transcript(xml_transcript):
     for child in root:
         # Make sure to convert `None` to ''
         text = child.text or ''
-        text = text.replace('\n', '\\n')
+        # Explicit newlines hinder search; using space instead
+        text = text.replace('\n', ' ')
         text = html.unescape(text)
         start = format_start(int(child.attrib['start']))
         result += '%s%s\n' % (start.ljust(7), text)
