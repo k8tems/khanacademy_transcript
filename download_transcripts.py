@@ -30,4 +30,4 @@ if __name__ == '__main__':
                 dest = os.path.join(dest_dir, v[0] + '.xml')
                 with open(dest, 'w') as f:
                     f.write(transcript)
-                a
+
