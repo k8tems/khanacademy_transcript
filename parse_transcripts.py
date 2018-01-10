@@ -1,4 +1,5 @@
 import os
+import html
 import xml.etree.ElementTree as ET
 
 
@@ -19,6 +20,7 @@ def parse_transcript(xml_transcript):
         # Make sure to convert `None` to ''
         text = child.text or ''
         text = text.replace('\n', '\\n')
+        text = html.unescape(text)
         result += '%s%s\n' % (child.attrib['start'].ljust(10), text)
     return result
 
