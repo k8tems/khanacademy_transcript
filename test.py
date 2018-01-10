@@ -56,6 +56,9 @@ class TestFormatStart(unittest.TestCase):
     def test(self):
         self.assertEqual('15:32', parse_transcripts.format_start(932))
 
+    def test_leading_0(self):
+        self.assertEqual('01:02', parse_transcripts.format_start(62))
+
 
 if __name__ == '__main__':
     unittest.main()
