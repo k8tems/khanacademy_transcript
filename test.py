@@ -59,6 +59,9 @@ class TestFormatStart(unittest.TestCase):
     def test_leading_0(self):
         self.assertEqual('01:02', parse_transcripts.format_start(62))
 
+    def test_remove_decimal(self):
+        self.assertEqual('00:03', parse_transcripts.format_start(3.14159))
+
 
 if __name__ == '__main__':
     unittest.main()
