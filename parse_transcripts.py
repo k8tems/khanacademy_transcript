@@ -7,6 +7,11 @@ def read_text(fname):
         return f.read()
 
 
+def write_text(fname, text):
+    with open(fname, 'w') as f:
+        f.write(text)
+
+
 def parse_transcript(xml_transcript):
     result = ''
     root = ET.fromstring(xml_transcript)
@@ -15,6 +20,11 @@ def parse_transcript(xml_transcript):
         text = child.text or ''
         result += '%s%s\n' % (child.attrib['start'].ljust(6), text)
     return result
+
+
+def create_dir(dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
 
 
 if __name__ == '__main__':
@@ -29,4 +39,9 @@ if __name__ == '__main__':
             for t in tutorials:
                 print('\t\t', t)
                 xml_transcript = read_text(os.path.join(xml_dir, md, cd, t))
-                parse_transcript(xml_transcript)
+                txt_transcript = parse_transcript(xml_transcript)
+
+                out_dir = os.path.join('transcripts', 'txt', md, cd)
+                create_dir(out_dir)
+                out_file = os.path.join(out_dir, t)
+                write_text(out_file, txt_transcript)
