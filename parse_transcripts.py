@@ -27,6 +27,10 @@ def create_dir(dir_name):
         os.makedirs(dir_name)
 
 
+def remove_extension(fname):
+    return fname[:fname.find('.')]
+
+
 if __name__ == '__main__':
     xml_dir = os.path.join('transcripts', 'xml')
     module_dirs = os.listdir(xml_dir)
@@ -43,5 +47,5 @@ if __name__ == '__main__':
 
                 out_dir = os.path.join('transcripts', 'txt', md, cd)
                 create_dir(out_dir)
-                out_file = os.path.join(out_dir, t)
+                out_file = os.path.join(out_dir, remove_extension(t) + '.txt')
                 write_text(out_file, txt_transcript)
