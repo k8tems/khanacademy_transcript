@@ -2,6 +2,7 @@ import re
 import json
 import requests
 from pprint import pprint
+from file import write_text
 
 
 def serialize_content_items(content_items):
@@ -69,8 +70,7 @@ def main():
     for m in modules:
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
-    with open('tutorials.json', 'w') as f:
-        f.write(json.dumps(modules))
+    write_text('tutorials.json', json.dumps(modules))
 
 
 if __name__ == '__main__':
