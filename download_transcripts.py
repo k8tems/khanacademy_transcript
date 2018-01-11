@@ -22,16 +22,20 @@ def should_skip_transcript(dest_file):
 if __name__ == '__main__':
     modules = json.loads(read_text('tutorials.json'))
     for m_i, m in enumerate(modules):
-        for t in m['tutorials']:
-            for v in t['videos']:
-                dest_dir = os.path.join('transcripts', 'xml', m['title'], t['title'])
+        for t_i, t in enumerate(m['tutorials']):
+            for v_i, v in enumerate(t['videos']):
+                dest_dir = os.path.join(
+                    'transcripts', 'xml',
+                    str(m_i) + ' ' + m['title'],
+                    str(t_i) + ' ' + t['title'])
                 create_dir(dest_dir)
-                dest_file = os.path.join(dest_dir, v[0].replace('/', '_') + '.xml')
-                print('\t', dest_file, v[2])
-                continue
-                if should_skip_transcript(dest_file):
-                    print('\t\t', 'skipping')
+                fname = '%d %s.xml' % (v_i, v[0].replace('/', '_'))
+                fname = os.path.join(dest_dir, fname)
+                print(fname, v[2])
+
+                if should_skip_transcript(fname):
+                    print('\t', 'skipping')
                     continue
 
                 transcript = download_transcript(v[2])
-                write_text(dest_file, transcript)
+                write_text(fname, transcript)
