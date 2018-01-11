@@ -26,8 +26,8 @@ if __name__ == '__main__':
             for v_i, v in enumerate(t['videos']):
                 dest_dir = os.path.join(
                     'transcripts', 'xml',
-                    str(m_i) + ' ' + m['title'],
-                    str(t_i) + ' ' + t['title'])
+                    '%d %s' % (m_i, m['title']),
+                    '%d %s' % (t_i, t['title']))
                 create_dir(dest_dir)
                 fname = '%d %s.xml' % (v_i, v[0].replace('/', '_'))
                 fname = os.path.join(dest_dir, fname)
