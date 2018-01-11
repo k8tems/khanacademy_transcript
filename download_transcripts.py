@@ -11,6 +11,14 @@ def download_transcript(video_id):
     return resp.text
 
 
+def should_skip_transcript(dest_file):
+    """
+    Return true if the transcript has already been processed
+    i.e. The file exists and is not empty
+    """
+    return os.path.exists(dest_file) and os.stat('file').st_size != 0
+
+
 if __name__ == '__main__':
     modules = json.loads(read_text('tutorials.json'))
     for m in modules:
@@ -23,7 +31,7 @@ if __name__ == '__main__':
                 create_dir(dest_dir)
                 dest_file = os.path.join(dest_dir, v[0].replace('/', '_') + '.xml')
 
-                if os.path.exists(dest_file):
+                if should_skip_transcript(dest_file):
                     continue
 
                 transcript = download_transcript(v[2])
