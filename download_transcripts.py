@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+from file import create_dir, write_text
 
 
 def download_transcript(video_id):
@@ -8,11 +9,6 @@ def download_transcript(video_id):
     resp = requests.get(
         'https://video.google.com/timedtext?lang=%s&v=%s' % (lang, video_id))
     return resp.text
-
-
-def create_dir(dir_name):
-    if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
 
 
 if __name__ == '__main__':
@@ -32,5 +28,4 @@ if __name__ == '__main__':
                     continue
 
                 transcript = download_transcript(v[2])
-                with open(dest_file, 'w') as f:
-                    f.write(transcript)
+                write_text(dest_file, transcript)
