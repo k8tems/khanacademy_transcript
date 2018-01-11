@@ -1,16 +1,7 @@
-import os
 import html
+import os
 import xml.etree.ElementTree as ET
-
-
-def read_text(fname):
-    with open(fname) as f:
-        return f.read()
-
-
-def write_text(fname, text):
-    with open(fname, 'w') as f:
-        f.write(text)
+from file import create_dir, read_text, write_text
 
 
 def format_start(start):
@@ -29,11 +20,6 @@ def parse_transcript(xml_transcript):
         start = format_start(int(float(child.attrib['start'])))
         result += '%s%s\n' % (start.ljust(7), text)
     return result
-
-
-def create_dir(dir_name):
-    if not os.path.exists(dir_name):
-        os.makedirs(dir_name)
 
 
 def remove_extension(fname):
