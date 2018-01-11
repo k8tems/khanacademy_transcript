@@ -53,7 +53,7 @@ class TestParseTranscript(unittest.TestCase):
 
 
 class TestFormatStart(unittest.TestCase):
-    def test(self):
+    def test_all_non_zero(self):
         self.assertEqual('15:32', parse_transcripts.format_start(932))
 
     def test_leading_0(self):
