@@ -4,7 +4,7 @@ import parse_transcripts
 
 
 class TestExtractReactComponent(unittest.TestCase):
-    def test(self):
+    def test_component_exists(self):
         fixture = '''<script>
 (function() {
     var React = KAdefine.require("react");
