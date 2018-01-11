@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from file import create_dir, write_text
+from file import create_dir, write_text, read_text
 
 
 def download_transcript(video_id):
@@ -12,8 +12,7 @@ def download_transcript(video_id):
 
 
 if __name__ == '__main__':
-    with open('tutorials.json') as f:
-        modules = json.loads(f.read())
+    modules = json.loads(read_text('tutorials.json'))
     for m in modules:
         module_title = m['title']
         print(module_title)
