@@ -32,6 +32,7 @@ if __name__ == '__main__':
                 dest_file = os.path.join(dest_dir, v[0].replace('/', '_') + '.xml')
 
                 if should_skip_transcript(dest_file):
+                    print('skipping', dest_file)
                     continue
 
                 transcript = download_transcript(v[2])
