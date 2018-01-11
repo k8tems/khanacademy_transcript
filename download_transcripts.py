@@ -16,7 +16,7 @@ def should_skip_transcript(dest_file):
     Return true if the transcript has already been processed
     i.e. The file exists and is not empty
     """
-    return os.path.exists(dest_file) and os.stat('file').st_size != 0
+    return os.path.exists(dest_file) and os.stat(dest_file).st_size != 0
 
 
 if __name__ == '__main__':
