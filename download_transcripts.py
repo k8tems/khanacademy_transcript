@@ -22,7 +22,7 @@ if __name__ == '__main__':
                 dest_dir = os.path.join('transcripts', 'xml', module_title, t['title'])
                 create_dir(dest_dir)
                 dest_file = os.path.join(dest_dir, v[0].replace('/', '_') + '.xml')
-                # Skip if already downloaded
+
                 if os.path.exists(dest_file):
                     continue
 
