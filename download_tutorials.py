@@ -26,16 +26,6 @@ def extract_tutorials(page_source):
     return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
 
-def serialize_content_items(content_items):
-    result = []
-    for ci in content_items:
-        # practice nodes do not have videos
-        if 'youtubeId' not in ci:
-            continue
-        result.append((ci['title'], ci['description'], ci['youtubeId']))
-    return result
-
-
 class TutorialDownloader(object):
     @classmethod
     def download_tutorials(cls, url):
@@ -43,12 +33,22 @@ class TutorialDownloader(object):
         return extract_tutorials(resp.text)
 
     @classmethod
+    def serialize_content_items(cls, content_items):
+        result = []
+        for ci in content_items:
+            # practice nodes do not have videos
+            if 'youtubeId' not in ci:
+                continue
+            result.append((ci['title'], ci['description'], ci['youtubeId']))
+        return result
+
+    @classmethod
     def serialize_tutorials(cls, tutorials):
         videos = []
         for t in tutorials:
             videos.append({
                 'title': t['title'],
-                'videos': serialize_content_items(t['contentItems'])})
+                'videos': cls.serialize_content_items(t['contentItems'])})
         return videos
 
     @classmethod
