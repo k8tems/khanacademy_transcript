@@ -27,7 +27,7 @@ def remove_extension(fname):
 
 
 if __name__ == '__main__':
-    subject = 'Linear ALgebra'
+    subject = 'Linear Algebra'
     xml_dir = os.path.join('transcripts', 'xml', subject)
     module_dirs = os.listdir(xml_dir)
     for md in module_dirs:
