@@ -21,16 +21,16 @@ def extract_react_component(page_source):
     return json.loads(regex.group(1))
 
 
-def extract_tutorials(page_source):
-    component = extract_react_component(page_source)
-    return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
-
-
 class TutorialDownloader(object):
+    @classmethod
+    def extract_tutorials(cls, page_source):
+        component = extract_react_component(page_source)
+        return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
+
     @classmethod
     def download_tutorials(cls, url):
         resp = requests.get(url)
-        return extract_tutorials(resp.text)
+        return cls.extract_tutorials(resp.text)
 
     @classmethod
     def serialize_content_items(cls, content_items):
