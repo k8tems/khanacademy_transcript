@@ -3,6 +3,13 @@ import download_tutorials
 import parse_transcripts
 
 
+class TestGetUrlBase(unittest.TestCase):
+    def test(self):
+        expected = 'https://www.khanacademy.org'
+        result = download_tutorials.get_url_base('https://www.khanacademy.org/math/linear-algebra')
+        self.assertEqual(expected, result)
+
+
 class TestExtractReactComponent(unittest.TestCase):
     def test_component_exists(self):
         fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})'
