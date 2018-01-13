@@ -5,26 +5,12 @@ import parse_transcripts
 
 class TestExtractReactComponent(unittest.TestCase):
     def test_component_exists(self):
-        fixture = '''<script>
-(function() {
-    var React = KAdefine.require("react");
-    var ReactDOM = KAdefine.require("react-dom");
-    var ApolloWrapper = React.createFactory(KAdefine.require(
-        "./javascript/apollo-package/apollo-wrapper.jsx"));
-    var Component = KAdefine.require("./javascript/app-shell-package/app.jsx");
-    var ReactComponent = React.createFactory(
-        Component.default || Component);
-    ReactDOM.render(ApolloWrapper({
-        initialState: null,
-        children: ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})
-    }), document.getElementById("_kareact_0"));
-})();
-</script>'''
+        fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})'
         self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_tutorials.extract_react_component(fixture))
 
     def test_component_not_found(self):
-        data = '<script></script>'
-        self.assertRaises(download_tutorials.ReactComponentNotFound, download_tutorials.extract_react_component, data)
+        fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggdIn": true})'
+        self.assertRaises(download_tutorials.ReactComponentNotFound, download_tutorials.extract_react_component, fixture)
 
 
 class TestParseTranscript(unittest.TestCase):
