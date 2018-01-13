@@ -1,3 +1,4 @@
+import os
 import re
 import json
 import requests
@@ -87,6 +88,7 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
+    title = 'Linear Algebra'
     url = 'https://www.khanacademy.org/math/linear-algebra'
     print('Getting modules')
     modules = get_modules(url)
@@ -94,7 +96,9 @@ def main():
         print('Processing ' + m['title'])
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
-    write_text('tutorials.json', json.dumps(modules))
+    out_dir = os.path.join('transcripts', 'tutorials')
+    fname = os.path.join(out_dir, title + '.json')
+    write_text(fname, json.dumps(modules))
 
 
 if __name__ == '__main__':
