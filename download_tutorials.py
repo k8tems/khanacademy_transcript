@@ -88,9 +88,10 @@ def main():
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
     url = 'https://www.khanacademy.org/math/linear-algebra'
+    print('Getting modules')
     modules = get_modules(url)
     for m in modules:
-        print('processing ' + m['title'])
+        print('Processing ' + m['title'])
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
     write_text('tutorials.json', json.dumps(modules))
