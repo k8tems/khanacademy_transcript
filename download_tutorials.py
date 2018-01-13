@@ -55,7 +55,9 @@ def get_tutorials(url):
 
 
 def extract_modules(page_source):
-    return []
+    component = extract_react_component(page_source)
+    modules = component['componentProps']['curation']['tabs'][0]['modules']
+    return [m for m in modules if m['kind'] == 'TableOfContentsRow']
 
 
 def download_modules(url):
@@ -63,12 +65,19 @@ def download_modules(url):
 
 
 def serialize_modules(modules):
-    return []
+    return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
-def get_modules(url):
-    modules = download_modules(url)
-    return serialize_modules(modules)
+def construct_uri(base, path):
+    return base + path
+
+
+def get_modules(absolute_url):
+    modules = download_modules(absolute_url)
+    modules = serialize_modules(modules)
+    for m in modules:
+        m['url'] = construct_uri(absolute_url, m['url'])
+    return modules
 
 
 def main():
