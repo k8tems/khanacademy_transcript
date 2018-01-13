@@ -44,7 +44,7 @@ if __name__ == '__main__':
                     continue
                 txt_transcript = parse_transcript(xml_transcript)
 
-                out_dir = os.path.join('transcripts', 'txt', md, cd)
+                out_dir = os.path.join('transcripts', 'txt', subject, md, cd)
                 create_dir(out_dir)
                 out_file = os.path.join(out_dir, remove_extension(t) + '.txt')
                 # `:` is illegal in windows
