@@ -72,12 +72,6 @@ class TutorialSpider(ReactSpider):
         return videos
 
 
-def extract_modules(page_source):
-    component = extract_react_component(page_source)
-    modules = component['componentProps']['curation']['tabs'][0]['modules']
-    return [m for m in modules if m['kind'] == 'TableOfContentsRow']
-
-
 def normalize_modules(component):
     modules = component['componentProps']['curation']['tabs'][0]['modules']
     modules = [m for m in modules if m['kind'] == 'TableOfContentsRow']
