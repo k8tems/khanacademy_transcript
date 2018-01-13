@@ -29,14 +29,14 @@ if __name__ == '__main__':
         for t_i, t in enumerate(m['tutorials']):
             dest_dir = os.path.join(dest_dir, '%d %s' % (t_i, t['title']))
             create_dir(dest_dir)
-            for v_i, v in enumerate(t['videos']):
-                fname = '%d %s.xml' % (v_i, v[0].replace('/', '_'))
+            for v_i, (video_title, _, video_id) in enumerate(t['videos']):
+                fname = '%d %s.xml' % (v_i, video_title.replace('/', '_'))
                 fname = os.path.join(dest_dir, fname)
-                print(fname, v[2])
+                print(fname, video_id)
 
                 if should_skip_transcript(fname):
                     print('\t', 'skipping')
                     continue
 
-                transcript = download_transcript(v[2])
+                transcript = download_transcript(video_id)
                 write_text(fname, transcript)
