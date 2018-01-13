@@ -25,7 +25,23 @@ def download(url):
     return requests.get(url).text
 
 
-class TutorialSpider(object):
+class ReactSpider(object):
+    @classmethod
+    def crawl(cls, url):
+        page_source = download(url)
+        data = cls.extract(page_source)
+        return cls.normalize(data)
+
+    @classmethod
+    def extract(cls, page_source):
+        raise NotImplemented()
+
+    @classmethod
+    def normalize(cls, data):
+        raise NotImplemented()
+
+
+class TutorialSpider(ReactSpider):
     @classmethod
     def extract(cls, page_source):
         """Extract react information from page source"""
@@ -50,12 +66,6 @@ class TutorialSpider(object):
                 'title': t['title'],
                 'videos': cls.normalize_content_items(t['contentItems'])})
         return videos
-
-    @classmethod
-    def crawl(cls, url):
-        page_source = download(url)
-        tutorials = cls.extract(page_source)
-        return cls.normalize(tutorials)
 
 
 def extract_modules(page_source):
