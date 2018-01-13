@@ -24,6 +24,7 @@ def extract_react_component(page_source):
 class TutorialSpider(object):
     @classmethod
     def extract(cls, page_source):
+        """Extract react information from page source"""
         component = extract_react_component(page_source)
         return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
