@@ -21,16 +21,16 @@ def extract_react_component(page_source):
     return json.loads(regex.group(1))
 
 
+def download(url):
+    return requests.get(url).text
+
+
 class TutorialSpider(object):
     @classmethod
     def extract(cls, page_source):
         """Extract react information from page source"""
         component = extract_react_component(page_source)
         return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
-
-    @classmethod
-    def download(cls, url):
-        return requests.get(url).text
 
     @classmethod
     def normalize_content_items(cls, content_items):
@@ -53,7 +53,7 @@ class TutorialSpider(object):
 
     @classmethod
     def crawl(cls, url):
-        page_source = cls.download(url)
+        page_source = download(url)
         tutorials = cls.extract(page_source)
         return cls.normalize(tutorials)
 
