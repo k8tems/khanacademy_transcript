@@ -36,20 +36,20 @@ def serialize_content_items(content_items):
     return result
 
 
-def serialize_tutorials(tutorials):
-    videos = []
-    for t in tutorials:
-        videos.append({
-            'title': t['title'],
-            'videos': serialize_content_items(t['contentItems'])})
-    return videos
-
-
 class TutorialDownloader(object):
     @classmethod
     def download_tutorials(cls, url):
         resp = requests.get(url)
         return extract_tutorials(resp.text)
+
+    @classmethod
+    def serialize_tutorials(cls, tutorials):
+        videos = []
+        for t in tutorials:
+            videos.append({
+                'title': t['title'],
+                'videos': serialize_content_items(t['contentItems'])})
+        return videos
 
     @classmethod
     def get(cls, url):
