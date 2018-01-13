@@ -64,10 +64,6 @@ def extract_modules(page_source):
     return [m for m in modules if m['kind'] == 'TableOfContentsRow']
 
 
-def download_modules(url):
-    return extract_modules(requests.get(url).text)
-
-
 def serialize_modules(modules):
     return [{'title': m['title'], 'url': m['url']} for m in modules]
 
@@ -78,7 +74,8 @@ def get_url_base(url):
 
 
 def get_modules(url):
-    modules = download_modules(url)
+    page_source = download(url)
+    modules = extract_modules(page_source)
     modules = serialize_modules(modules)
     url_base = get_url_base(url)
     for m in modules:
