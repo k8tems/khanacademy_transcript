@@ -78,6 +78,14 @@ def normalize_modules(component):
     return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
+class ModuleSpider(ReactSpider):
+    @classmethod
+    def normalize(cls, component):
+        modules = component['componentProps']['curation']['tabs'][0]['modules']
+        modules = [m for m in modules if m['kind'] == 'TableOfContentsRow']
+        return [{'title': m['title'], 'url': m['url']} for m in modules]
+
+
 def get_url_base(url):
     regex = re.search('(.+://.+?)/.+', url)
     return regex.group(1)
@@ -91,9 +99,7 @@ def adjust_module_urls(modules, url):
 
 
 def get_modules(url):
-    page_source = download(url)
-    react_component = ReactParserMixin.extract_react_component(page_source)
-    modules = normalize_modules(react_component)
+    modules = ModuleSpider.crawl(url)
     return adjust_module_urls(modules, url)
 
 
