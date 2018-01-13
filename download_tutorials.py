@@ -78,7 +78,9 @@ def extract_modules(page_source):
     return [m for m in modules if m['kind'] == 'TableOfContentsRow']
 
 
-def serialize_modules(modules):
+def normalize_modules(component):
+    modules = component['componentProps']['curation']['tabs'][0]['modules']
+    modules = [m for m in modules if m['kind'] == 'TableOfContentsRow']
     return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
@@ -89,8 +91,8 @@ def get_url_base(url):
 
 def get_modules(url):
     page_source = download(url)
-    modules = extract_modules(page_source)
-    modules = serialize_modules(modules)
+    react_component = ReactParserMixin.extract_react_component(page_source)
+    modules = normalize_modules(react_component)
     url_base = get_url_base(url)
     for m in modules:
         m['url'] = url_base + m['url']
