@@ -6,16 +6,6 @@ from pprint import pprint
 from file import write_text, create_dir
 
 
-def serialize_content_items(content_items):
-    result = []
-    for ci in content_items:
-        # practice nodes do not have videos
-        if 'youtubeId' not in ci:
-            continue
-        result.append((ci['title'], ci['description'], ci['youtubeId']))
-    return result
-
-
 class ReactComponentNotFound(RuntimeError):
     pass
 
@@ -39,6 +29,16 @@ def extract_tutorials(page_source):
 def download_tutorials(url):
     resp = requests.get(url)
     return extract_tutorials(resp.text)
+
+
+def serialize_content_items(content_items):
+    result = []
+    for ci in content_items:
+        # practice nodes do not have videos
+        if 'youtubeId' not in ci:
+            continue
+        result.append((ci['title'], ci['description'], ci['youtubeId']))
+    return result
 
 
 def serialize_tutorials(tutorials):
