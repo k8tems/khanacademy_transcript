@@ -30,8 +30,8 @@ class TutorialSpider(object):
 
     @classmethod
     def download(cls, url):
-        resp = requests.get(url)
-        return cls.extract(resp.text)
+        page_source = requests.get(url).text
+        return cls.extract(page_source)
 
     @classmethod
     def normalize_content_items(cls, content_items):
