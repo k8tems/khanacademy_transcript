@@ -23,14 +23,14 @@ def extract_react_component(page_source):
 
 class TutorialDownloader(object):
     @classmethod
-    def extract_tutorials(cls, page_source):
+    def extract(cls, page_source):
         component = extract_react_component(page_source)
         return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
     @classmethod
-    def download_tutorials(cls, url):
+    def download(cls, url):
         resp = requests.get(url)
-        return cls.extract_tutorials(resp.text)
+        return cls.extract(resp.text)
 
     @classmethod
     def serialize_content_items(cls, content_items):
@@ -43,7 +43,7 @@ class TutorialDownloader(object):
         return result
 
     @classmethod
-    def serialize_tutorials(cls, tutorials):
+    def serialize(cls, tutorials):
         videos = []
         for t in tutorials:
             videos.append({
@@ -53,8 +53,8 @@ class TutorialDownloader(object):
 
     @classmethod
     def get(cls, url):
-        tutorials = cls.download_tutorials(url)
-        return cls.serialize_tutorials(tutorials)
+        tutorials = cls.download(url)
+        return cls.serialize(tutorials)
 
 
 def extract_modules(page_source):
