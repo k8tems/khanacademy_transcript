@@ -54,19 +54,31 @@ def get_tutorials(url):
     return serialize_tutorials(tutorials)
 
 
+def extract_modules(page_source):
+    return []
+
+
+def download_modules(url):
+    resp = requests.get(url)
+    return extract_modules(resp.text)
+
+
+def serialize_modules(modules):
+    return []
+
+
+def get_modules(url):
+    modules = download_modules(url)
+    return serialize_modules(modules)
+
+
 def main():
     """
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    modules = [{
-        'title': 'Vectors and spaces',
-        'url': 'https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces'}, {
-        'title': 'Matrix transformations',
-        'url': 'https://www.khanacademy.org/math/linear-algebra/matrix-transformations'}, {
-        'title': 'Alternate coordinate systems(bases)',
-        'url': 'https://www.khanacademy.org/math/linear-algebra/alternate-bases',
-    }]
+    url = 'https://www.khanacademy.org/math/linear-algebra'
+    modules = get_modules(url)
     for m in modules:
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
