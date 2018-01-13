@@ -34,7 +34,7 @@ class TutorialSpider(object):
         return cls.extract(resp.text)
 
     @classmethod
-    def serialize_content_items(cls, content_items):
+    def normalize_content_items(cls, content_items):
         result = []
         for ci in content_items:
             # practice nodes do not have videos
@@ -44,18 +44,18 @@ class TutorialSpider(object):
         return result
 
     @classmethod
-    def serialize(cls, tutorials):
+    def normalize(cls, tutorials):
         videos = []
         for t in tutorials:
             videos.append({
                 'title': t['title'],
-                'videos': cls.serialize_content_items(t['contentItems'])})
+                'videos': cls.normalize_content_items(t['contentItems'])})
         return videos
 
     @classmethod
     def crawl(cls, url):
         tutorials = cls.download(url)
-        return cls.serialize(tutorials)
+        return cls.normalize(tutorials)
 
 
 def extract_modules(page_source):
