@@ -59,8 +59,7 @@ def extract_modules(page_source):
 
 
 def download_modules(url):
-    resp = requests.get(url)
-    return extract_modules(resp.text)
+    return extract_modules(requests.get(url).text)
 
 
 def serialize_modules(modules):
