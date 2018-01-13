@@ -54,7 +54,7 @@ class TutorialDownloader(object):
     @classmethod
     def get(cls, url):
         tutorials = cls.download_tutorials(url)
-        return serialize_tutorials(tutorials)
+        return cls.serialize_tutorials(tutorials)
 
 
 def extract_modules(page_source):
