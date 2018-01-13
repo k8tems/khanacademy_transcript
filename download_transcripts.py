@@ -19,23 +19,28 @@ def should_skip_transcript(dest_file):
     return os.path.exists(dest_file) and os.stat(dest_file).st_size != 0
 
 
-def process_modules(modules, current_directory):
+def process_tutorials(tutorials, base_dir):
+    for t_i, t in enumerate(tutorials):
+        dest_dir = os.path.join(base_dir, '%d %s' % (t_i, t['title']))
+        create_dir(dest_dir)
+        for v_i, (video_title, _, video_id) in enumerate(t['videos']):
+            fname = '%d %s.xml' % (v_i, video_title.replace('/', '_'))
+            fname = os.path.join(dest_dir, fname)
+            print(fname, video_id)
+
+            if should_skip_transcript(fname):
+                print('\t', 'skipping')
+                continue
+
+            transcript = download_transcript(video_id)
+            write_text(fname, transcript)
+
+
+def process_modules(modules, base_dir):
     for m_i, m in enumerate(modules):
-        dest_dir = os.path.join(current_directory, '%d %s' % (m_i, m['title']))
-        for t_i, t in enumerate(m['tutorials']):
-            dest_dir = os.path.join(dest_dir, '%d %s' % (t_i, t['title']))
-            create_dir(dest_dir)
-            for v_i, (video_title, _, video_id) in enumerate(t['videos']):
-                fname = '%d %s.xml' % (v_i, video_title.replace('/', '_'))
-                fname = os.path.join(dest_dir, fname)
-                print(fname, video_id)
-
-                if should_skip_transcript(fname):
-                    print('\t', 'skipping')
-                    continue
-
-                transcript = download_transcript(video_id)
-                write_text(fname, transcript)
+        # Do not overwrite `base_dir`
+        dest_dir = os.path.join(base_dir, '%d %s' % (m_i, m['title']))
+        process_tutorials(modules, dest_dir)
 
 
 if __name__ == '__main__':
