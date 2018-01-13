@@ -21,7 +21,7 @@ def extract_react_component(page_source):
     return json.loads(regex.group(1))
 
 
-class TutorialDownloader(object):
+class TutorialSpider(object):
     @classmethod
     def extract(cls, page_source):
         component = extract_react_component(page_source)
@@ -52,7 +52,7 @@ class TutorialDownloader(object):
         return videos
 
     @classmethod
-    def get(cls, url):
+    def crawl(cls, url):
         tutorials = cls.download(url)
         return cls.serialize(tutorials)
 
@@ -96,7 +96,7 @@ def main():
     modules = get_modules(url)
     for m in modules:
         print('Processing ' + m['title'])
-        m['tutorials'] = TutorialDownloader.get(m['url'])
+        m['tutorials'] = TutorialSpider.crawl(m['url'])
     pprint(modules)
     out_dir = os.path.join('transcripts', 'tutorials')
     create_dir(out_dir)
