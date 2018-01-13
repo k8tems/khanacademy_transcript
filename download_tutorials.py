@@ -16,15 +16,6 @@ def serialize_content_items(content_items):
     return result
 
 
-def serialize_tutorials(tutorials):
-    videos = []
-    for t in tutorials:
-        videos.append({
-            'title': t['title'],
-            'videos': serialize_content_items(t['contentItems'])})
-    return videos
-
-
 class ReactComponentNotFound(RuntimeError):
     pass
 
@@ -48,6 +39,15 @@ def extract_tutorials(page_source):
 def download_tutorials(url):
     resp = requests.get(url)
     return extract_tutorials(resp.text)
+
+
+def serialize_tutorials(tutorials):
+    videos = []
+    for t in tutorials:
+        videos.append({
+            'title': t['title'],
+            'videos': serialize_content_items(t['contentItems'])})
+    return videos
 
 
 def get_tutorials(url):
