@@ -95,6 +95,13 @@ def get_modules(url):
     return adjust_module_urls(modules, url)
 
 
+def save(title, modules):
+    out_dir = os.path.join('transcripts', 'tutorials')
+    create_dir(out_dir)
+    fname = os.path.join(out_dir, title + '.json')
+    write_text(fname, json.dumps(modules))
+
+
 def main():
     """
     Download tutorials of every content in every module
@@ -108,10 +115,7 @@ def main():
         print('Processing ' + m['title'])
         m['tutorials'] = TutorialSpider.crawl(m['url'])
     pprint(modules)
-    out_dir = os.path.join('transcripts', 'tutorials')
-    create_dir(out_dir)
-    fname = os.path.join(out_dir, title + '.json')
-    write_text(fname, json.dumps(modules))
+    save(title, modules)
 
 
 if __name__ == '__main__':
