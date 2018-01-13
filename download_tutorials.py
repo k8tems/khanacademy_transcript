@@ -26,11 +26,6 @@ def extract_tutorials(page_source):
     return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
 
 
-def download_tutorials(url):
-    resp = requests.get(url)
-    return extract_tutorials(resp.text)
-
-
 def serialize_content_items(content_items):
     result = []
     for ci in content_items:
@@ -51,10 +46,14 @@ def serialize_tutorials(tutorials):
 
 
 class TutorialDownloader(object):
-    # Is this function object a bad idea?
+    @classmethod
+    def download_tutorials(cls, url):
+        resp = requests.get(url)
+        return extract_tutorials(resp.text)
+
     @classmethod
     def get(cls, url):
-        tutorials = download_tutorials(url)
+        tutorials = cls.download_tutorials(url)
         return serialize_tutorials(tutorials)
 
 
