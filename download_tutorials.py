@@ -94,6 +94,7 @@ def main():
     url = 'https://www.khanacademy.org/math/linear-algebra'
     modules = get_modules(url)
     for m in modules:
+        print('processing ' + m['title'])
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
     write_text('tutorials.json', json.dumps(modules))
