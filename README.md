@@ -12,3 +12,6 @@ Requirements
 ```
 requests
 ```
+
+TODO
+- [ ] Refactor `parse_transcripts.py`
