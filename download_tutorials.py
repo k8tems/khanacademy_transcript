@@ -25,7 +25,7 @@ def download(url):
     return requests.get(url).text
 
 
-class ReactSpider(object):
+class ReactParserMixin(object):
     @staticmethod
     def extract_react_component(page_source):
         """
@@ -37,6 +37,8 @@ class ReactSpider(object):
             raise ReactComponentNotFound(page_source)
         return json.loads(regex.group(1))
 
+
+class ReactSpider(object, ReactParserMixin):
     @classmethod
     def crawl(cls, url):
         page_source = download(url)
