@@ -50,9 +50,12 @@ def serialize_tutorials(tutorials):
     return videos
 
 
-def get_tutorials(url):
-    tutorials = download_tutorials(url)
-    return serialize_tutorials(tutorials)
+class TutorialDownloader(object):
+    # Is this function object a bad idea?
+    @classmethod
+    def get(cls, url):
+        tutorials = download_tutorials(url)
+        return serialize_tutorials(tutorials)
 
 
 def extract_modules(page_source):
@@ -94,7 +97,7 @@ def main():
     modules = get_modules(url)
     for m in modules:
         print('Processing ' + m['title'])
-        m['tutorials'] = get_tutorials(m['url'])
+        m['tutorials'] = TutorialDownloader.get(m['url'])
     pprint(modules)
     out_dir = os.path.join('transcripts', 'tutorials')
     create_dir(out_dir)
