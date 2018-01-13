@@ -40,7 +40,7 @@ def process_modules(modules, base_dir):
     for m_i, m in enumerate(modules):
         # Do not overwrite `base_dir`
         dest_dir = os.path.join(base_dir, '%d %s' % (m_i, m['title']))
-        process_tutorials(modules, dest_dir)
+        process_tutorials(m['tutorials'], dest_dir)
 
 
 if __name__ == '__main__':
