@@ -26,15 +26,22 @@ def download(url):
 
 
 class ReactSpider(object):
+    @staticmethod
+    def extract_react_component(page_source):
+        """
+        Extract data used to initialize `ReactComponent` from the given page source
+        This will only work if the `ReactComponent` is constructed in one line
+        """
+        regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', page_source)
+        if not regex:
+            raise ReactComponentNotFound(page_source)
+        return json.loads(regex.group(1))
+
     @classmethod
     def crawl(cls, url):
         page_source = download(url)
-        data = cls.extract(page_source)
-        return cls.normalize(data)
-
-    @classmethod
-    def extract(cls, page_source):
-        raise NotImplemented()
+        react_component = cls.extract_react_component(page_source)
+        return cls.normalize(react_component)
 
     @classmethod
     def normalize(cls, data):
@@ -42,12 +49,6 @@ class ReactSpider(object):
 
 
 class TutorialSpider(ReactSpider):
-    @classmethod
-    def extract(cls, page_source):
-        """Extract react information from page source"""
-        component = extract_react_component(page_source)
-        return component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
-
     @classmethod
     def normalize_content_items(cls, content_items):
         result = []
@@ -59,7 +60,8 @@ class TutorialSpider(ReactSpider):
         return result
 
     @classmethod
-    def normalize(cls, tutorials):
+    def normalize(cls, component):
+        tutorials = component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
         videos = []
         for t in tutorials:
             videos.append({
