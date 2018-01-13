@@ -89,14 +89,18 @@ def get_url_base(url):
     return regex.group(1)
 
 
-def get_modules(url):
-    page_source = download(url)
-    react_component = ReactParserMixin.extract_react_component(page_source)
-    modules = normalize_modules(react_component)
+def adjust_module_urls(modules, url):
     url_base = get_url_base(url)
     for m in modules:
         m['url'] = url_base + m['url']
     return modules
+
+
+def get_modules(url):
+    page_source = download(url)
+    react_component = ReactParserMixin.extract_react_component(page_source)
+    modules = normalize_modules(react_component)
+    return adjust_module_urls(modules, url)
 
 
 def main():
