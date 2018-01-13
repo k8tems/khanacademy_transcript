@@ -3,7 +3,7 @@ import re
 import json
 import requests
 from pprint import pprint
-from file import write_text
+from file import write_text, create_dir
 
 
 def serialize_content_items(content_items):
@@ -97,6 +97,7 @@ def main():
         m['tutorials'] = get_tutorials(m['url'])
     pprint(modules)
     out_dir = os.path.join('transcripts', 'tutorials')
+    create_dir(out_dir)
     fname = os.path.join(out_dir, title + '.json')
     write_text(fname, json.dumps(modules))
 
