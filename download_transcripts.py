@@ -21,7 +21,8 @@ def should_skip_transcript(dest_file):
 
 if __name__ == '__main__':
     subject = 'Linear Algebra'
-    modules = json.loads(read_text(subject + '.json'))
+    src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
+    modules = json.loads(read_text(src_fname))
     base_dir = os.path.join('transcripts', 'xml', subject)
     for m_i, m in enumerate(modules):
         dest_dir = os.path.join(base_dir, '%d %s' % (m_i, m['title']))
