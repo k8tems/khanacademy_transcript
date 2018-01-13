@@ -72,12 +72,6 @@ class TutorialSpider(ReactSpider):
         return videos
 
 
-def normalize_modules(component):
-    modules = component['componentProps']['curation']['tabs'][0]['modules']
-    modules = [m for m in modules if m['kind'] == 'TableOfContentsRow']
-    return [{'title': m['title'], 'url': m['url']} for m in modules]
-
-
 class ModuleSpider(ReactSpider):
     @classmethod
     def normalize(cls, component):
