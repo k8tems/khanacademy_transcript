@@ -68,10 +68,6 @@ def serialize_modules(modules):
     return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
-def construct_full_url(base, path):
-    return base + path
-
-
 def get_url_base(url):
     regex = re.search('(.+://.+?)/.+', url)
     return regex.group(1)
@@ -82,7 +78,7 @@ def get_modules(url):
     modules = serialize_modules(modules)
     url_base = get_url_base(url)
     for m in modules:
-        m['url'] = construct_full_url(url_base, m['url'])
+        m['url'] = url_base + m['url']
     return modules
 
 
