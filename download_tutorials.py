@@ -68,15 +68,21 @@ def serialize_modules(modules):
     return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
-def construct_uri(base, path):
+def construct_full_url(base, path):
     return base + path
 
 
-def get_modules(absolute_url):
-    modules = download_modules(absolute_url)
+def get_url_base(url):
+    regex = re.search('(.+://.+?)/.+', url)
+    return regex.group(1)
+
+
+def get_modules(url):
+    modules = download_modules(url)
     modules = serialize_modules(modules)
+    url_base = get_url_base(url)
     for m in modules:
-        m['url'] = construct_uri(absolute_url, m['url'])
+        m['url'] = construct_full_url(url_base, m['url'])
     return modules
 
 
