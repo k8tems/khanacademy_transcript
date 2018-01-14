@@ -55,7 +55,7 @@ class ReactSpider(object):
 
 class TutorialSpider(ReactSpider):
     @classmethod
-    def normalize_content_items(cls, content_items):
+    def filter_content_items(cls, content_items):
         result = []
         for ci in content_items:
             # practice nodes do not have videos
@@ -71,7 +71,7 @@ class TutorialSpider(ReactSpider):
         for t in tutorials:
             nodes.append({
                 'title': t['title'],
-                'children': cls.normalize_content_items(t['contentItems'])})
+                'children': cls.filter_content_items(t['contentItems'])})
         return nodes
 
 
