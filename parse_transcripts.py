@@ -40,7 +40,12 @@ def is_transcript_directory(path):
 
 
 def generate_transcript_directories(root, path):
-    """Generate all directories containing transcripts"""
+    """
+    Recursively generate all subdirectories containing transcripts
+    :param root: root path
+    :param path: current relative path
+    :return: directory containing transcripts
+    """
     for sub in os.listdir(os.path.join(root, path)):
         subpath = os.path.join(path, sub)
         if is_transcript_directory(os.path.join(root, subpath)):
