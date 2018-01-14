@@ -41,10 +41,10 @@ class ReactSpider(object):
     def crawl(cls, url):
         page_source = download(url)
         react_component = cls.extract_react_component(page_source)
-        return cls.normalize(react_component)
+        return cls.filter(react_component)
 
     @classmethod
-    def normalize(cls, data):
+    def filter(cls, data):
         raise NotImplemented()
 
 
@@ -60,7 +60,7 @@ class TutorialSpider(ReactSpider):
         return result
 
     @classmethod
-    def normalize(cls, component):
+    def filter(cls, component):
         tutorials = component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
         videos = []
         for t in tutorials:
@@ -72,7 +72,7 @@ class TutorialSpider(ReactSpider):
 
 class ModuleSpider(ReactSpider):
     @classmethod
-    def normalize(cls, component):
+    def filter(cls, component):
         modules = component['componentProps']['curation']['tabs'][0]['modules']
         modules = [m for m in modules if m['kind'] == 'TableOfContentsRow']
         return [{'title': m['title'], 'url': m['url']} for m in modules]
