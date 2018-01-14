@@ -38,7 +38,8 @@ if __name__ == '__main__':
             tutorials = os.listdir(os.path.join(xml_dir, md, cd))
             for t in tutorials:
                 print('\t\t', t)
-                xml_transcript = read_text(os.path.join(xml_dir, md, cd, t))
+                in_fname = os.path.join(xml_dir, md, cd, t)
+                xml_transcript = read_text(in_fname)
                 # Sometimes the transcript is empty; Maybe try downloading again?
                 if not xml_transcript:
                     continue
@@ -46,7 +47,7 @@ if __name__ == '__main__':
 
                 out_dir = os.path.join('transcripts', 'txt', subject, md, cd)
                 create_dir(out_dir)
-                out_file = os.path.join(out_dir, remove_extension(t) + '.txt')
+                out_fname = os.path.join(out_dir, remove_extension(t) + '.txt')
                 # `:` is illegal in windows
-                out_file = out_file.replace(':', '_')
-                write_text(out_file, txt_transcript)
+                out_fname = out_fname.replace(':', '_')
+                write_text(out_fname, txt_transcript)
