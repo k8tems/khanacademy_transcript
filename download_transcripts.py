@@ -49,7 +49,7 @@ def process_modules(modules, base_dir):
 
 
 def generate_videos(video_data, path=''):
-    """Recursively generate video_id,path pairs from given video hierarchy"""
+    """Recursively generate `video_id`,`path` pairs from given video hierarchy"""
     for child in video_data:
         title = child['title']
         # Do not update `path`
@@ -68,11 +68,10 @@ if __name__ == '__main__':
 
     for video_id, path in generate_videos(video_data):
         print(video_id, path)
-        continue
         fname = os.path.join(dest_dir, path) + '.xml'
         if should_skip_transcript(fname):
             print('\t', 'skipping')
             continue
 
-        transcript = download_transcript(v['video_id'])
+        transcript = download_transcript(video_id)
         write_text(fname, transcript)
