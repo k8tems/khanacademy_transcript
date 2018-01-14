@@ -27,27 +27,20 @@ def remove_extension(fname):
 
 
 if __name__ == '__main__':
-    subject = 'Linear Algebra'
-    xml_dir = os.path.join('transcripts', 'xml', subject)
-    module_dirs = os.listdir(xml_dir)
-    for md in module_dirs:
-        print(md)
-        content_dirs = os.listdir(os.path.join(xml_dir, md))
-        for cd in content_dirs:
-            print('\t', cd)
-            tutorials = os.listdir(os.path.join(xml_dir, md, cd))
-            for t in tutorials:
-                print('\t\t', t)
-                in_fname = os.path.join(xml_dir, md, cd, t)
-                xml_transcript = read_text(in_fname)
-                # Sometimes the transcript is empty; Maybe try downloading again?
-                if not xml_transcript:
-                    continue
-                txt_transcript = parse_transcript(xml_transcript)
+    xml_dir = os.path.join('transcripts', 'xml')
+    for path in generate_sub_directories(xml_dir):
+        for t in os.listdir(os.path.join(xml_dir, path)):
+            print('\t\t', t)
+            in_fname = os.path.join(xml_dir, path, t)
+            xml_transcript = read_text(in_fname)
+            # Sometimes the transcript is empty; Maybe try downloading again?
+            if not xml_transcript:
+                continue
+            txt_transcript = parse_transcript(xml_transcript)
 
-                out_dir = os.path.join('transcripts', 'txt', subject, md, cd)
-                create_dir(out_dir)
-                out_fname = os.path.join(out_dir, remove_extension(t) + '.txt')
-                # `:` is illegal in windows
-                out_fname = out_fname.replace(':', '_')
-                write_text(out_fname, txt_transcript)
+            out_dir = os.path.join('transcripts', 'txt', path)
+            create_dir(out_dir)
+            out_fname = os.path.join(out_dir, remove_extension(t) + '.txt')
+            # `:` is illegal in windows
+            out_fname = out_fname.replace(':', '_')
+            write_text(out_fname, txt_transcript)
