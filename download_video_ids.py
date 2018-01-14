@@ -6,23 +6,12 @@ from pprint import pprint
 from file import write_text, create_dir
 
 
-class ReactComponentNotFound(RuntimeError):
-    pass
-
-
-def extract_react_component(page_source):
-    """
-    Extract data used to initialize `ReactComponent` from the given page source
-    This will only work if the `ReactComponent` is constructed in one line
-    """
-    regex = re.search('ReactComponent\((.+,\s*"loggedIn".+?})', page_source)
-    if not regex:
-        raise ReactComponentNotFound(page_source)
-    return json.loads(regex.group(1))
-
-
 def download(url):
     return requests.get(url).text
+
+
+class ReactComponentNotFound(RuntimeError):
+    pass
 
 
 class ReactSpider(object):

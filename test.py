@@ -13,11 +13,11 @@ class TestGetUrlBase(unittest.TestCase):
 class TestExtractReactComponent(unittest.TestCase):
     def test_component_exists(self):
         fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})'
-        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_video_ids.extract_react_component(fixture))
+        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_video_ids.ReactSpider.extract_react_component(fixture))
 
     def test_component_not_found(self):
         fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggdIn": true})'
-        self.assertRaises(download_video_ids.ReactComponentNotFound, download_video_ids.extract_react_component, fixture)
+        self.assertRaises(download_video_ids.ReactComponentNotFound, download_video_ids.ReactSpider.extract_react_component, fixture)
 
 
 class TestParseTranscript(unittest.TestCase):
