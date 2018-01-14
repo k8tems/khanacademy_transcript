@@ -41,12 +41,12 @@ def is_transcript_directory(path):
 
 def generate_transcript_directories(root, path):
     """Generate all directories containing transcripts"""
-    for subdir in os.listdir(os.path.join(root, path)):
-        full_path = os.path.join(root, path, subdir)
-        if is_transcript_directory(full_path):
-            yield os.path.join(path, subdir)
+    for sub in os.listdir(os.path.join(root, path)):
+        subpath = os.path.join(path, sub)
+        if is_transcript_directory(os.path.join(root, subpath)):
+            yield subpath
         else:
-            yield from generate_transcript_directories(root, os.path.join(path, subdir))
+            yield from generate_transcript_directories(root, subpath)
 
 
 if __name__ == '__main__':
