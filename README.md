@@ -1,5 +1,5 @@
 # khanacademy_transcript
-Quick and dirty suite of scripts for curating khanacademy video transcripts
+Quick and dirty script suite for curating khanacademy video transcripts
 
 Usage
 ```
