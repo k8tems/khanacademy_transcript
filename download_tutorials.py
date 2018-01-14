@@ -116,12 +116,14 @@ def main():
     title = 'Linear Algebra'
     url = 'https://www.khanacademy.org/math/linear-algebra'
     print('Getting modules')
-    modules = get_modules(url)
-    for m in modules:
+    result = []
+    for m in get_modules(url):
         print('Processing ' + m['title'])
-        m['children'] = TutorialSpider.crawl(m['url'])
-    pprint(modules)
-    save(title, modules)
+        result.append({
+            'title': m['title'],
+            'children': TutorialSpider.crawl(m['url'])})
+    pprint(result)
+    save(title, result)
 
 
 if __name__ == '__main__':
