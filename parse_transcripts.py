@@ -34,7 +34,9 @@ def is_directory(path):
 
 def is_transcript_directory(path):
     """Check if the path is a directory containing transcripts"""
-    return not is_directory(os.listdir(path)[0])
+    first_fname = os.listdir(path)[0]
+    first_fname = os.path.join(path, first_fname)
+    return not is_directory(first_fname)
 
 
 def generate_transcript_directories(root):
