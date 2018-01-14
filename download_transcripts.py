@@ -53,4 +53,11 @@ if __name__ == '__main__':
     src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
     modules = json.loads(read_text(src_fname))
     base_dir = os.path.join('transcripts', 'xml', subject)
-    process_modules(modules, base_dir)
+    for video_id, path in generate_videos():
+        fname = os.path.join(base_dir, path) + '.xml'
+        if should_skip_transcript(fname):
+            print('\t', 'skipping')
+            continue
+
+        transcript = download_transcript(v['video_id'])
+        write_text(fname, transcript)
