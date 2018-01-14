@@ -32,22 +32,26 @@ def is_directory(path):
     return S_ISDIR(mode)
 
 
-def generate_sub_directories(root):
-    """Return all directories"""
+def is_transcript_directory(path):
+    """Check if the path is a directory containing transcripts"""
+    return not is_directory(os.listdir(path)[0])
+
+
+def generate_transcript_directories(root):
+    """Generate all directories containing transcripts"""
     for path in os.listdir(root):
         path = os.path.join(root, path)
-        if is_directory(path):
-            yield from generate_sub_directories(path)
-        else:
+        if is_transcript_directory(path):
             yield path
+        yield from generate_transcript_directories(path)
 
 
 if __name__ == '__main__':
     from pprint import pprint
-    pprint(list(generate_sub_directories(os.path.join('transcripts', 'xml'))))
+    pprint(list(generate_transcript_directories(os.path.join('transcripts', 'xml'))))
     a
     xml_dir = os.path.join('transcripts', 'xml')
-    for path in generate_sub_directories(xml_dir):
+    for path in generate_transcript_directories(xml_dir):
         for t in os.listdir(os.path.join(xml_dir, path)):
             print('\t\t', t)
             in_fname = os.path.join(xml_dir, path, t)
