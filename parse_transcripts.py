@@ -39,24 +39,21 @@ def is_transcript_directory(path):
     return not is_directory(first_fname)
 
 
-def generate_transcript_directories(root):
+def generate_transcript_directories(root, path):
     """Generate all directories containing transcripts"""
-    for path in os.listdir(root):
-        path = os.path.join(root, path)
-        if is_transcript_directory(path):
-            yield path
+    for subdir in os.listdir(os.path.join(root, path)):
+        full_path = os.path.join(root, path, subdir)
+        if is_transcript_directory(full_path):
+            yield os.path.join(path, subdir)
         else:
-            yield from generate_transcript_directories(path)
+            yield from generate_transcript_directories(root, os.path.join(path, subdir))
 
 
 if __name__ == '__main__':
-    from pprint import pprint
-    pprint(list(generate_transcript_directories(os.path.join('transcripts', 'xml'))))
-    a
     xml_dir = os.path.join('transcripts', 'xml')
-    for path in generate_transcript_directories(xml_dir):
+    for path in generate_transcript_directories(xml_dir, ''):
         for t in os.listdir(os.path.join(xml_dir, path)):
-            print('\t\t', t)
+            print(t)
             in_fname = os.path.join(xml_dir, path, t)
             xml_transcript = read_text(in_fname)
             # Sometimes the transcript is empty; Maybe try downloading again?
