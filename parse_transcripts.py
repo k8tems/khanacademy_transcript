@@ -1,6 +1,7 @@
 import html
 import os
 import xml.etree.ElementTree as ET
+from stat import S_ISDIR, ST_MODE
 from file import create_dir, read_text, write_text
 
 
@@ -26,7 +27,21 @@ def remove_extension(fname):
     return fname[:fname.find('.')]
 
 
+def generate_sub_directories(root):
+    """Return all directories"""
+    for path in os.listdir(root):
+        path = os.path.join(root, path)
+        mode = os.stat(path)[ST_MODE]
+        if S_ISDIR(mode):
+            yield from generate_sub_directories(path)
+        else:
+            yield path
+
+
 if __name__ == '__main__':
+    from pprint import pprint
+    pprint(list(generate_sub_directories(os.path.join('transcripts', 'xml'))))
+    a
     xml_dir = os.path.join('transcripts', 'xml')
     for path in generate_sub_directories(xml_dir):
         for t in os.listdir(os.path.join(xml_dir, path)):
