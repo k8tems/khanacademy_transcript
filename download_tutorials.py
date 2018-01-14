@@ -89,6 +89,7 @@ def get_url_base(url):
 
 
 def adjust_module_urls(modules, url):
+    """Convert relative paths to full urls"""
     url_base = get_url_base(url)
     for m in modules:
         m['url'] = url_base + m['url']
