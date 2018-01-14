@@ -50,10 +50,10 @@ def process_modules(modules, base_dir):
 
 def generate_videos(video_data, path=''):
     """Recursively generate `video_id`,`path` pairs from given video hierarchy"""
-    for child in video_data:
+    for i, child in enumerate(video_data):
         title = child['title']
         # Do not update `path`
-        child_path = os.path.join(path, title)
+        child_path = os.path.join(path, '%d %s' % (i, title))
         if 'video_id' in child:
             yield child['video_id'], child_path
         else:
