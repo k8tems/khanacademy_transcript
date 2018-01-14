@@ -58,9 +58,10 @@ def generate_transcript_directories(root, path):
 if __name__ == '__main__':
     xml_dir = os.path.join('transcripts', 'xml')
     for path in generate_transcript_directories(xml_dir, ''):
-        for t in os.listdir(os.path.join(xml_dir, path)):
+        in_dir = os.path.join(xml_dir, path)
+        for t in os.listdir(in_dir):
             print(t)
-            in_fname = os.path.join(xml_dir, path, t)
+            in_fname = os.path.join(in_dir, t)
             xml_transcript = read_text(in_fname)
             # Sometimes the transcript is empty; Maybe try downloading again?
             if not xml_transcript:
