@@ -45,7 +45,8 @@ def generate_transcript_directories(root):
         path = os.path.join(root, path)
         if is_transcript_directory(path):
             yield path
-        yield from generate_transcript_directories(path)
+        else:
+            yield from generate_transcript_directories(path)
 
 
 if __name__ == '__main__':
