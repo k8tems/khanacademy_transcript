@@ -27,12 +27,16 @@ def remove_extension(fname):
     return fname[:fname.find('.')]
 
 
+def is_directory(path):
+    mode = os.stat(path)[ST_MODE]
+    return S_ISDIR(mode)
+
+
 def generate_sub_directories(root):
     """Return all directories"""
     for path in os.listdir(root):
         path = os.path.join(root, path)
-        mode = os.stat(path)[ST_MODE]
-        if S_ISDIR(mode):
+        if is_directory(path):
             yield from generate_sub_directories(path)
         else:
             yield path
