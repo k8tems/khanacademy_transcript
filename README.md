@@ -14,4 +14,5 @@ requests
 ```
 
 TODO
-- [ ] Refactor `parse_transcripts.py`
+- [x] Refactor `parse_transcripts.py`
+- [ ] Abstract file containing video ids
