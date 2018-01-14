@@ -16,4 +16,4 @@ requests
 TODO
 - [x] Refactor `parse_transcripts.py`
 - [x] Abstract file containing video ids
-- [x] Auto detect subject(e.g. Math => (Linear Algebra, Probability Theory, Calculus ...)
+- [x] Auto detect subject(e.g. Math => Linear Algebra, Probability Theory, Calculus ...)
