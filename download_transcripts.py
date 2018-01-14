@@ -75,4 +75,5 @@ if __name__ == '__main__':
             continue
 
         transcript = download_transcript(video_id)
+        create_dir(os.path.dirname(fname))
         write_text(fname, transcript)
