@@ -67,12 +67,12 @@ class TutorialSpider(ReactSpider):
     @classmethod
     def filter(cls, component):
         tutorials = component['componentProps']['curation']['tabs'][0]['modules'][0]['tutorials']
-        videos = []
+        nodes = []
         for t in tutorials:
-            videos.append({
+            nodes.append({
                 'title': t['title'],
                 'children': cls.normalize_content_items(t['contentItems'])})
-        return videos
+        return nodes
 
 
 class ModuleSpider(ReactSpider):
