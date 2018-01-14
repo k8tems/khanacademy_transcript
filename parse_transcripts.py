@@ -28,12 +28,13 @@ def remove_extension(fname):
 
 
 def is_directory(path):
+    """Check if `path` is a directory"""
     mode = os.stat(path)[ST_MODE]
     return S_ISDIR(mode)
 
 
 def is_transcript_directory(path):
-    """Check if the path is a directory containing transcripts"""
+    """Check if the `path` is a directory containing transcripts"""
     first_fname = os.listdir(path)[0]
     first_fname = os.path.join(path, first_fname)
     return not is_directory(first_fname)
