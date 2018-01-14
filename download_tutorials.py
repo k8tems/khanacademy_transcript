@@ -61,7 +61,7 @@ class TutorialSpider(ReactSpider):
             # practice nodes do not have videos
             if 'youtubeId' not in ci:
                 continue
-            result.append((ci['title'], ci['youtubeId']))
+            result.append({'title': ci['title'], 'video_id': ci['youtubeId']})
         return result
 
     @classmethod
