@@ -19,23 +19,32 @@ def should_skip_transcript(dest_file):
     return os.path.exists(dest_file) and os.stat(dest_file).st_size != 0
 
 
+def generate_videos(video_data, path=''):
+    """Recursively generate `video_id`,`path` pairs from given video hierarchy"""
+    for i, child in enumerate(video_data):
+        title = child['title']
+        # Do not update `path`
+        child_path = os.path.join(path, '%d %s' % (i, title))
+        if 'video_id' in child:
+            yield child['video_id'], child_path
+        else:
+            yield from generate_videos(child['children'], child_path)
+
+
 if __name__ == '__main__':
-    modules = json.loads(read_text('tutorials.json'))
-    for m_i, m in enumerate(modules):
-        for t_i, t in enumerate(m['tutorials']):
-            for v_i, v in enumerate(t['videos']):
-                dest_dir = os.path.join(
-                    'transcripts', 'xml',
-                    '%d %s' % (m_i, m['title']),
-                    '%d %s' % (t_i, t['title']))
-                create_dir(dest_dir)
-                fname = '%d %s.xml' % (v_i, v[0].replace('/', '_'))
-                fname = os.path.join(dest_dir, fname)
-                print(fname, v[2])
+    subject = 'Linear Algebra'
+    src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
+    video_data = json.loads(read_text(src_fname))
+    dest_dir = os.path.join('transcripts', 'xml', subject)
 
-                if should_skip_transcript(fname):
-                    print('\t', 'skipping')
-                    continue
+    for video_id, path in generate_videos(video_data):
+        print(video_id, path)
+        fname = os.path.join(dest_dir, path) + '.xml'
 
-                transcript = download_transcript(v[2])
-                write_text(fname, transcript)
+        if should_skip_transcript(fname):
+            print('\t', 'skipping')
+            continue
+
+        transcript = download_transcript(video_id)
+        create_dir(os.path.dirname(fname))
+        write_text(fname, transcript)

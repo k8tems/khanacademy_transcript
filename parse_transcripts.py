@@ -1,6 +1,7 @@
 import html
 import os
 import xml.etree.ElementTree as ET
+from stat import S_ISDIR, ST_MODE
 from file import create_dir, read_text, write_text
 
 
@@ -26,26 +27,50 @@ def remove_extension(fname):
     return fname[:fname.find('.')]
 
 
+def is_directory(path):
+    """Check if `path` is a directory"""
+    mode = os.stat(path)[ST_MODE]
+    return S_ISDIR(mode)
+
+
+def is_transcript_directory(path):
+    """Check if the `path` is a directory containing transcripts"""
+    first_fname = os.listdir(path)[0]
+    first_fname = os.path.join(path, first_fname)
+    return not is_directory(first_fname)
+
+
+def generate_transcript_directories(root, path):
+    """
+    Recursively generate all subdirectories containing transcripts
+    :param root: root path
+    :param path: current relative path
+    :return: directory containing transcripts
+    """
+    for sub in os.listdir(os.path.join(root, path)):
+        subpath = os.path.join(path, sub)
+        if is_transcript_directory(os.path.join(root, subpath)):
+            yield subpath
+        else:
+            yield from generate_transcript_directories(root, subpath)
+
+
 if __name__ == '__main__':
     xml_dir = os.path.join('transcripts', 'xml')
-    module_dirs = os.listdir(xml_dir)
-    for md in module_dirs:
-        print(md)
-        content_dirs = os.listdir(os.path.join(xml_dir, md))
-        for cd in content_dirs:
-            print('\t', cd)
-            tutorials = os.listdir(os.path.join(xml_dir, md, cd))
-            for t in tutorials:
-                print('\t\t', t)
-                xml_transcript = read_text(os.path.join(xml_dir, md, cd, t))
-                # Sometimes the transcript is empty; Maybe try downloading again?
-                if not xml_transcript:
-                    continue
-                txt_transcript = parse_transcript(xml_transcript)
+    for path in generate_transcript_directories(xml_dir, ''):
+        in_dir = os.path.join(xml_dir, path)
+        for t in os.listdir(in_dir):
+            print(t)
+            in_fname = os.path.join(in_dir, t)
+            xml_transcript = read_text(in_fname)
+            # Sometimes the transcript is empty; Maybe try downloading again?
+            if not xml_transcript:
+                continue
+            txt_transcript = parse_transcript(xml_transcript)
 
-                out_dir = os.path.join('transcripts', 'txt', md, cd)
-                create_dir(out_dir)
-                out_file = os.path.join(out_dir, remove_extension(t) + '.txt')
-                # `:` is illegal in windows
-                out_file = out_file.replace(':', '_')
-                write_text(out_file, txt_transcript)
+            out_dir = os.path.join('transcripts', 'txt', path)
+            create_dir(out_dir)
+            out_fname = os.path.join(out_dir, remove_extension(t) + '.txt')
+            # `:` is illegal in windows
+            out_fname = out_fname.replace(':', '_')
+            write_text(out_fname, txt_transcript)

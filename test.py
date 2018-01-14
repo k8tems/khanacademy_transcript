@@ -1,16 +1,23 @@
 import unittest
-import download_tutorials
+import download_video_ids
 import parse_transcripts
+
+
+class TestGetUrlBase(unittest.TestCase):
+    def test(self):
+        expected = 'https://www.khanacademy.org'
+        result = download_video_ids.get_url_base('https://www.khanacademy.org/math/linear-algebra')
+        self.assertEqual(expected, result)
 
 
 class TestExtractReactComponent(unittest.TestCase):
     def test_component_exists(self):
         fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggedIn": true})'
-        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_tutorials.extract_react_component(fixture))
+        self.assertEqual({'loggedIn': True, 'componentProps': {'foo': 'bar'}}, download_video_ids.ReactSpider.extract_react_component(fixture))
 
     def test_component_not_found(self):
         fixture = 'ReactComponent({"componentProps": {"foo": "bar"}, "loggdIn": true})'
-        self.assertRaises(download_tutorials.ReactComponentNotFound, download_tutorials.extract_react_component, fixture)
+        self.assertRaises(download_video_ids.ReactComponentNotFound, download_video_ids.ReactSpider.extract_react_component, fixture)
 
 
 class TestParseTranscript(unittest.TestCase):
