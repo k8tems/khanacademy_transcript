@@ -19,35 +19,6 @@ def should_skip_transcript(dest_file):
     return os.path.exists(dest_file) and os.stat(dest_file).st_size != 0
 
 
-def process_videos(videos, base_dir):
-    create_dir(base_dir)
-    for v_i, v in enumerate(videos):
-        fname = '%d %s.xml' % (v_i, v['title'].replace('/', '_'))
-        fname = os.path.join(base_dir, fname)
-        print(fname, v['video_id'])
-
-        if should_skip_transcript(fname):
-            print('\t', 'skipping')
-            continue
-
-        transcript = download_transcript(v['video_id'])
-        write_text(fname, transcript)
-
-
-def process_tutorials(tutorials, base_dir):
-    for t_i, t in enumerate(tutorials):
-        # Do not overwrite `base_dir`
-        dest_dir = os.path.join(base_dir, '%d %s' % (t_i, t['title']))
-        process_videos(t['children'], dest_dir)
-
-
-def process_modules(modules, base_dir):
-    for m_i, m in enumerate(modules):
-        # Do not overwrite `base_dir`
-        dest_dir = os.path.join(base_dir, '%d %s' % (m_i, m['title']))
-        process_tutorials(m['children'], dest_dir)
-
-
 def generate_videos(video_data, path=''):
     """Recursively generate `video_id`,`path` pairs from given video hierarchy"""
     for i, child in enumerate(video_data):
