@@ -48,13 +48,27 @@ def process_modules(modules, base_dir):
         process_tutorials(m['children'], dest_dir)
 
 
+def generate_videos(video_data, path=''):
+    """Recursively generate video_id,path pairs from given video hierarchy"""
+    for child in video_data:
+        title = child['title']
+        # Do not update `path`
+        child_path = os.path.join(path, title)
+        if 'video_id' in child:
+            yield child['video_id'], child_path
+        else:
+            yield from generate_videos(child['children'], child_path)
+
+
 if __name__ == '__main__':
     subject = 'Linear Algebra'
     src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
-    video_ids = json.loads(read_text(src_fname))
+    video_data = json.loads(read_text(src_fname))
     dest_dir = os.path.join('transcripts', 'xml', subject)
 
-    for video_id, path in generate_videos(video_ids):
+    for video_id, path in generate_videos(video_data):
+        print(video_id, path)
+        continue
         fname = os.path.join(dest_dir, path) + '.xml'
         if should_skip_transcript(fname):
             print('\t', 'skipping')
