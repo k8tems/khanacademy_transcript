@@ -69,6 +69,7 @@ if __name__ == '__main__':
     for video_id, path in generate_videos(video_data):
         print(video_id, path)
         fname = os.path.join(dest_dir, path) + '.xml'
+
         if should_skip_transcript(fname):
             print('\t', 'skipping')
             continue
