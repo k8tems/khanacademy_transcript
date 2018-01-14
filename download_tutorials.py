@@ -44,7 +44,7 @@ class ReactSpider(object):
         return cls.filter(react_component)
 
     @classmethod
-    def filter(cls, data):
+    def filter(cls, component):
         raise NotImplemented()
 
 
