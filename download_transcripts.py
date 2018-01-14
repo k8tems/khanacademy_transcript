@@ -51,10 +51,11 @@ def process_modules(modules, base_dir):
 if __name__ == '__main__':
     subject = 'Linear Algebra'
     src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
-    modules = json.loads(read_text(src_fname))
-    base_dir = os.path.join('transcripts', 'xml', subject)
-    for video_id, path in generate_videos():
-        fname = os.path.join(base_dir, path) + '.xml'
+    video_ids = json.loads(read_text(src_fname))
+    dest_dir = os.path.join('transcripts', 'xml', subject)
+
+    for video_id, path in generate_videos(video_ids):
+        fname = os.path.join(dest_dir, path) + '.xml'
         if should_skip_transcript(fname):
             print('\t', 'skipping')
             continue
