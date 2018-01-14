@@ -45,6 +45,11 @@ class ReactSpider(object):
 
     @classmethod
     def filter(cls, component):
+        """
+        filter and return necessary data from react component
+        :param component: unfiltered data used to initialize `ReactComponent`
+        :return: filtered data
+        """
         raise NotImplemented()
 
 
