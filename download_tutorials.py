@@ -71,7 +71,7 @@ class TutorialSpider(ReactSpider):
         for t in tutorials:
             videos.append({
                 'title': t['title'],
-                'videos': cls.normalize_content_items(t['contentItems'])})
+                'children': cls.normalize_content_items(t['contentItems'])})
         return videos
 
 
@@ -119,7 +119,7 @@ def main():
     modules = get_modules(url)
     for m in modules:
         print('Processing ' + m['title'])
-        m['tutorials'] = TutorialSpider.crawl(m['url'])
+        m['children'] = TutorialSpider.crawl(m['url'])
     pprint(modules)
     save(title, modules)
 
