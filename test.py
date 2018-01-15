@@ -68,8 +68,8 @@ class TestGenerateDirectories(unittest.TestCase):
                'video_id': 'quux'}],
            'title': 'corge'}]
         expected = [
-            {'path': 'baz/foo', 'title': 'bar'},
-            {'path': 'qux/quux', 'title': 'corge'},
+            {'path': 'baz/foo', 'video_id': 'bar'},
+            {'path': 'qux/quux', 'video_id': 'corge'},
         ]
         self.assertEqual(expected, list(download_video_ids.generate_directories(inp)))
 
