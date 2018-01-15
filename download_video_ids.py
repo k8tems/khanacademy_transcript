@@ -111,8 +111,8 @@ def commit_directories(directories, dest):
     :param dest: directory in file system to commit to
     """
     for node in directories:
-        create_dir(node['path'])
         fname = os.path.join(dest, node['path'], node['video_id'])
+        create_dir(os.path.dirname(fname))
         content = 'video_id'
         write_text(fname, content)
 
