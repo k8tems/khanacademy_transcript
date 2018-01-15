@@ -180,11 +180,11 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    for m in ModuleSpider.crawl('https://www.khanacademy.org/math'):
+    for m in get_modules('https://www.khanacademy.org/math'):
         module_title = m['title']
         print('Processing ' + module_title)
         subject_dir = os.path.join('video_ids', module_title)
-        process_modules('https://www.khanacademy.org' + m['url'], subject_dir)
+        process_modules(m['url'], subject_dir)
 
 
 if __name__ == '__main__':
