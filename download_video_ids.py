@@ -126,7 +126,6 @@ def main():
     url = 'https://www.khanacademy.org/math/linear-algebra'
     print('Getting modules')
 
-    result = []
     subject_dir = os.path.join('video_ids', subject)
 
     for m in get_modules(url):
@@ -141,10 +140,7 @@ def main():
         converted = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
         for c in converted:
             c['path'] = os.path.join(module_dir, c['path'])
-        result += converted
-
-    pprint(result)
-    commit_hierarchy(result)
+        commit_hierarchy(converted)
 
 
 if __name__ == '__main__':
