@@ -138,8 +138,8 @@ def main():
 
     subject_dir = os.path.join('video_ids', subject)
 
-    for m in get_modules(url):
-        module_title = m['title']
+    for m_i, m in enumerate(get_modules(url)):
+        module_title = '%d%s' % (m_i, m['title'])
         print('Processing ' + module_title)
 
         module_dir = os.path.join(subject_dir, module_title)
