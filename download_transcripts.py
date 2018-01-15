@@ -65,4 +65,4 @@ if __name__ == '__main__':
     for path in generate_transcript_directories(src):
         cd = os.path.join(src, path)
         for fname in os.listdir(cd):
-            print(cd, fname)
+            print(path, fname)
