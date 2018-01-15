@@ -137,10 +137,10 @@ def main():
             print('\tSkipping ' + module_directory)
             continue
 
-        generated = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
-        for g in generated:
-            g['path'] = os.path.join(module_directory, g['path'])
-        result += generated
+        converted = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
+        for c in converted:
+            c['path'] = os.path.join(module_directory, c['path'])
+        result += converted
 
     pprint(result)
     commit_hierarchy(result)
