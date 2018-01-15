@@ -106,7 +106,7 @@ def convert_hierarchy(hierarchy):
 
 def commit_hierarchy(hierarchy):
     """
-    Commit hierarchy to file system
+    Commit hierarchy to file system so that they can be cached
     :param hierarchy: hierarchy to commit
     :param dest: directory in file system to commit to
     """
