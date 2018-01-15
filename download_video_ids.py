@@ -97,22 +97,28 @@ def save(title, modules):
     write_text(fname, json.dumps(modules))
 
 
+def generate_directories(input):
+    """Convert dict hierarchy to directory hierarchy"""
+    for i in input:
+        pass
+
+
 def main():
     """
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    title = 'Linear Algebra'
+    subject = 'Linear Algebra'
     url = 'https://www.khanacademy.org/math/linear-algebra'
     print('Getting modules')
     result = []
-    for m in get_modules(url):
+    modules = get_modules(url)
+    for m in modules:
         print('Processing ' + m['title'])
-        result.append({
-            'title': m['title'],
-            'children': TutorialSpider.crawl(m['url'])})
+        result += generate_directories(TutorialSpider.crawl(m['url']))
+        for r in result:
+            r['path'] = os.path.join(subject, m['title'], r['path'])
     pprint(result)
-    save(title, result)
 
 
 if __name__ == '__main__':
