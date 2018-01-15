@@ -111,10 +111,8 @@ def commit_hierarchy(hierarchy):
     :param dest: directory in file system to commit to
     """
     for node in hierarchy:
-        fname = os.path.join(node['path'], node['video_id'])
-        create_dir(os.path.dirname(fname))
-        content = 'video_id'
-        write_text(fname, content)
+        create_dir(os.path.dirname(node['path']))
+        write_text(node['path'], node['video_id'])
 
 
 def resolve_paths(hierarchy, dest):
@@ -151,7 +149,7 @@ def main():
             continue
 
         hierarchy = TutorialSpider.crawl(m['url'])
-        hierarchy = convert_hierarchy(hierarchy)
+        hierarchy = list(convert_hierarchy(hierarchy))
         hierarchy = resolve_paths(hierarchy, module_dir)
         commit_hierarchy(hierarchy)
 
