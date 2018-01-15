@@ -72,12 +72,6 @@ class ModuleSpider(ReactSpider):
         return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
-class SubjectSpider(ReactSpider):
-    @classmethod
-    def filter(cls, component):
-        return component
-
-
 def get_url_base(url):
     regex = re.search('(.+://.+?)/.+', url)
     return regex.group(1)
@@ -163,12 +157,12 @@ def fix_illegal_names(hierarchy):
 def process_modules(url, dest_dir):
     for m_i, m in enumerate(get_modules(url)):
         module_title = '%d %s' % (m_i, m['title'])
-        print('Processing ' + module_title)
+        print('\tProcessing ' + module_title)
 
         module_dir = os.path.join(dest_dir, module_title)
 
         if os.path.exists(module_dir):
-            print('\tSkipping ' + module_dir)
+            print('\t\tSkipping ' + module_dir)
             continue
 
         hierarchy = TutorialSpider.crawl(m['url'])
@@ -186,14 +180,11 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    pprint(SubjectSpider.crawl('https://www.khanacademy.org/math'))
-    return
-
-    subject = 'Linear Algebra'
-    url = 'https://www.khanacademy.org/math/linear-algebra'
-    subject_dir = os.path.join('video_ids', subject)
-    print('Getting modules')
-    process_modules(url, subject_dir)
+    for m in ModuleSpider.crawl('https://www.khanacademy.org/math'):
+        module_title = m['title']
+        print('Processing ' + module_title)
+        subject_dir = os.path.join('video_ids', module_title)
+        process_modules(m['url'], subject_dir)
 
 
 if __name__ == '__main__':
