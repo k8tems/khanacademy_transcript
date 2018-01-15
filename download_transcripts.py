@@ -2,6 +2,7 @@ import os
 import json
 import requests
 from file import create_dir, write_text, read_text
+from stat import S_ISDIR, ST_MODE
 
 
 def download_transcript(video_id):
@@ -31,20 +32,37 @@ def generate_videos(video_data, path=''):
             yield from generate_videos(child['children'], child_path)
 
 
+def is_directory(path):
+    """Check if `path` is a directory"""
+    mode = os.stat(path)[ST_MODE]
+    return S_ISDIR(mode)
+
+
+def is_transcript_directory(path):
+    """Check if the `path` is a directory containing transcripts"""
+    first_fname = os.listdir(path)[0]
+    first_fname = os.path.join(path, first_fname)
+    return not is_directory(first_fname)
+
+
+def generate_transcript_directories(root, path=''):
+    """
+    Recursively generate all subdirectories containing transcripts
+    :param root: root path
+    :param path: current relative path
+    :return: directory containing transcripts
+    """
+    for sub in os.listdir(os.path.join(root, path)):
+        subpath = os.path.join(path, sub)
+        if is_transcript_directory(os.path.join(root, subpath)):
+            yield subpath
+        else:
+            yield from generate_transcript_directories(root, subpath)
+
+
 if __name__ == '__main__':
-    subject = 'Linear Algebra'
-    src_fname = os.path.join('transcripts', 'tutorials', subject + '.json')
-    video_data = json.loads(read_text(src_fname))
-    dest_dir = os.path.join('transcripts', 'xml', subject)
-
-    for video_id, path in generate_videos(video_data):
-        print(video_id, path)
-        fname = os.path.join(dest_dir, path) + '.xml'
-
-        if should_skip_transcript(fname):
-            print('\t', 'skipping')
-            continue
-
-        transcript = download_transcript(video_id)
-        create_dir(os.path.dirname(fname))
-        write_text(fname, transcript)
+    src = 'video_ids'
+    for path in generate_transcript_directories(src):
+        cd = os.path.join(src, path)
+        for fname in os.listdir(cd):
+            print(cd, fname)
