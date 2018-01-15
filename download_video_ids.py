@@ -125,8 +125,8 @@ def main():
     subject = 'Linear Algebra'
     url = 'https://www.khanacademy.org/math/linear-algebra'
     print('Getting modules')
-    result = []
 
+    result = []
     subject_dir = os.path.join('video_ids', subject)
 
     for m in get_modules(url):
