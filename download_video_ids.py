@@ -104,6 +104,19 @@ def generate_directories(root):
             yield {'path': os.path.join(c['title'], gc['title']), 'video_id': gc['video_id']}
 
 
+def commit_directories(directories, dest):
+    """
+    Commit hierarchy to file system
+    :param directories: hierarchy to commit
+    :param dest: directory in file system to commit to
+    """
+    for node in directories:
+        create_dir(node['path'])
+        fname = os.path.join(dest, node['path'], node['video_id'])
+        content = 'video_id'
+        write_text(fname, content)
+
+
 def main():
     """
     Download tutorials of every content in every module
@@ -120,6 +133,7 @@ def main():
         for r in result:
             r['path'] = os.path.join(subject, m['title'], r['path'])
     pprint(result)
+    commit_directories(result, 'video_ids')
 
 
 if __name__ == '__main__':
