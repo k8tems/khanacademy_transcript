@@ -141,6 +141,19 @@ def resolve_indices(hierarchy):
     return hierarchy
 
 
+def fix_illegal_names(hierarchy):
+    """
+    Fix illegal names
+    :param hierarchy: hierarchy containing video ids; mutated
+    :return: hierarchy with resolved indices
+    """
+    for i, h in enumerate(hierarchy):
+        h['title'] = h['title'].replace('/', '_')
+        if 'children' in h:
+            fix_illegal_names(h['children'])
+    return hierarchy
+
+
 def main():
     """
     Download tutorials of every content in every module
@@ -164,6 +177,7 @@ def main():
 
         hierarchy = TutorialSpider.crawl(m['url'])
         hierarchy = resolve_indices(hierarchy)
+        hierarchy = fix_illegal_names(hierarchy)
         hierarchy = list(convert_hierarchy(hierarchy))
         hierarchy = resolve_paths(hierarchy, module_dir)
         commit_hierarchy(hierarchy)
