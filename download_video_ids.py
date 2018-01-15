@@ -155,7 +155,7 @@ def main():
         hierarchy = resolve_paths(hierarchy, module_dir)
         commit_hierarchy(hierarchy)
 
-        print('Saved ' + module_title)
+        print('\tSaved ' + module_title)
 
 
 if __name__ == '__main__':
