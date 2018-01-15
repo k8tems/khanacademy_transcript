@@ -104,14 +104,14 @@ def generate_directories(root):
             yield {'path': os.path.join(c['title'], gc['title']), 'video_id': gc['video_id']}
 
 
-def commit_directories(directories, dest):
+def commit_directories(directories):
     """
     Commit hierarchy to file system
     :param directories: hierarchy to commit
     :param dest: directory in file system to commit to
     """
     for node in directories:
-        fname = os.path.join(dest, node['path'], node['video_id'])
+        fname = os.path.join(node['path'], node['video_id'])
         create_dir(os.path.dirname(fname))
         content = 'video_id'
         write_text(fname, content)
@@ -127,19 +127,23 @@ def main():
     print('Getting modules')
     result = []
     modules = get_modules(url)
+
     for m in modules:
         print('Processing ' + m['title'])
 
-        if os.path.exists(os.path.join('video_ids', subject)):
-            print('\tSkipping ' + m['title'])
+        module_directory = os.path.join('video_ids', subject, m['title'])
+
+        if os.path.exists(module_directory):
+            print('\tSkipping ' + module_directory)
             continue
 
         generated = list(generate_directories(TutorialSpider.crawl(m['url'])))
         for g in generated:
-            g['path'] = os.path.join(subject, m['title'], g['path'])
+            g['path'] = os.path.join(module_directory, g['path'])
         result += generated
+
     pprint(result)
-    commit_directories(result, 'video_ids')
+    commit_directories(result)
 
 
 if __name__ == '__main__':
