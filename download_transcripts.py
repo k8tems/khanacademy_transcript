@@ -1,6 +1,6 @@
 import os
 import requests
-from file import create_dir, write_text
+from file import create_dir, write_text, read_text
 from stat import S_ISDIR, ST_MODE
 
 
@@ -64,9 +64,10 @@ if __name__ == '__main__':
     dest_dir = os.path.join('transcripts', 'xml')
 
     for path in generate_transcript_directories(src):
-        for video_id in os.listdir(os.path.join(src, path)):
-            print(path, video_id)
-            fname = os.path.join(dest_dir, path, video_id) + '.xml'
+        for video_title in os.listdir(os.path.join(src, path)):
+            video_id = read_text(os.path.join(src, path, video_title))
+            print(path, video_title, video_id)
+            fname = os.path.join(dest_dir, path, video_title) + '.xml'
 
             if should_skip_transcript(fname):
                 print('\t', 'skipping')
