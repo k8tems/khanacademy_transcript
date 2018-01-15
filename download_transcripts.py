@@ -62,7 +62,17 @@ def generate_transcript_directories(root, path=''):
 
 if __name__ == '__main__':
     src = 'video_ids'
+    dest_dir = os.path.join('transcripts', 'xml')
+
     for path in generate_transcript_directories(src):
-        cd = os.path.join(src, path)
-        for fname in os.listdir(cd):
-            print(path, fname)
+        for video_id in os.listdir(os.path.join(src, path)):
+            print(path, video_id)
+            fname = os.path.join(dest_dir, path, video_id) + '.xml'
+
+            if should_skip_transcript(fname):
+                print('\t', 'skipping')
+                continue
+
+            transcript = download_transcript(video_id)
+            create_dir(os.path.dirname(fname))
+            write_text(fname, transcript)
