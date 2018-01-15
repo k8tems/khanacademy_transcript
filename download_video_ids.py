@@ -127,18 +127,20 @@ def main():
     print('Getting modules')
     result = []
 
+    subject_dir = os.path.join('video_ids', subject)
+
     for m in get_modules(url):
         print('Processing ' + m['title'])
 
-        module_directory = os.path.join('video_ids', subject, m['title'])
+        module_dir = os.path.join(subject_dir, m['title'])
 
-        if os.path.exists(module_directory):
-            print('\tSkipping ' + module_directory)
+        if os.path.exists(module_dir):
+            print('\tSkipping ' + module_dir)
             continue
 
         converted = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
         for c in converted:
-            c['path'] = os.path.join(module_directory, c['path'])
+            c['path'] = os.path.join(module_dir, c['path'])
         result += converted
 
     pprint(result)
