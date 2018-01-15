@@ -72,6 +72,12 @@ class ModuleSpider(ReactSpider):
         return [{'title': m['title'], 'url': m['url']} for m in modules]
 
 
+class SubjectSpider(ReactSpider):
+    @classmethod
+    def filter(cls, component):
+        return component
+
+
 def get_url_base(url):
     regex = re.search('(.+://.+?)/.+', url)
     return regex.group(1)
@@ -180,6 +186,9 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
+    pprint(SubjectSpider.crawl('https://www.khanacademy.org/math'))
+    return
+
     subject = 'Linear Algebra'
     url = 'https://www.khanacademy.org/math/linear-algebra'
     subject_dir = os.path.join('video_ids', subject)
