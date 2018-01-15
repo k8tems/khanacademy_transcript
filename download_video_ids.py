@@ -184,7 +184,7 @@ def main():
         module_title = m['title']
         print('Processing ' + module_title)
         subject_dir = os.path.join('video_ids', module_title)
-        process_modules(m['url'], subject_dir)
+        process_modules('https://www.khanacademy.org' + m['url'], subject_dir)
 
 
 if __name__ == '__main__':
