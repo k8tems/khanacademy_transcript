@@ -129,9 +129,10 @@ def main():
     modules = get_modules(url)
     for m in modules:
         print('Processing ' + m['title'])
-        result += generate_directories(TutorialSpider.crawl(m['url']))
-        for r in result:
-            r['path'] = os.path.join(subject, m['title'], r['path'])
+        generated = list(generate_directories(TutorialSpider.crawl(m['url'])))
+        for g in generated:
+            g['path'] = os.path.join(subject, m['title'], g['path'])
+        result += generated
     pprint(result)
     commit_directories(result, 'video_ids')
 
