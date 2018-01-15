@@ -148,7 +148,7 @@ def fix_illegal_names(hierarchy):
     :return: hierarchy with resolved indices
     """
     for i, h in enumerate(hierarchy):
-        h['title'] = h['title'].replace('/', '_')
+        h['title'] = h['title'].replace('/', '_').replace(':', '_')
         if 'children' in h:
             fix_illegal_names(h['children'])
     return hierarchy
