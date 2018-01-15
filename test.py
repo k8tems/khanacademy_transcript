@@ -71,7 +71,7 @@ class TestGenerateDirectories(unittest.TestCase):
             {'path': 'baz/foo', 'video_id': 'bar'},
             {'path': 'corge/qux', 'video_id': 'quux'},
         ]
-        self.assertEqual(expected, list(download_video_ids.generate_directories(inp)))
+        self.assertEqual(expected, list(download_video_ids.convert_hierarchy(inp)))
 
 
 if __name__ == '__main__':

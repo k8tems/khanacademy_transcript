@@ -97,14 +97,14 @@ def save(title, modules):
     write_text(fname, json.dumps(modules))
 
 
-def generate_directories(root):
+def convert_hierarchy(root):
     """Convert dict hierarchy to directory hierarchy"""
     for c in root:
         for gc in c['children']:
             yield {'path': os.path.join(c['title'], gc['title']), 'video_id': gc['video_id']}
 
 
-def commit_directories(directories):
+def commit_hierarchy(directories):
     """
     Commit hierarchy to file system
     :param directories: hierarchy to commit
@@ -137,13 +137,13 @@ def main():
             print('\tSkipping ' + module_directory)
             continue
 
-        generated = list(generate_directories(TutorialSpider.crawl(m['url'])))
+        generated = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
         for g in generated:
             g['path'] = os.path.join(module_directory, g['path'])
         result += generated
 
     pprint(result)
-    commit_directories(result)
+    commit_hierarchy(result)
 
 
 if __name__ == '__main__':
