@@ -1,7 +1,6 @@
 import os
-import json
 import requests
-from file import create_dir, write_text, read_text
+from file import create_dir, write_text
 from stat import S_ISDIR, ST_MODE
 
 
