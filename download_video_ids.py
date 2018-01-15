@@ -154,22 +154,12 @@ def fix_illegal_names(hierarchy):
     return hierarchy
 
 
-def main():
-    """
-    Download tutorials of every content in every module
-    eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
-    """
-    subject = 'Linear Algebra'
-    url = 'https://www.khanacademy.org/math/linear-algebra'
-    print('Getting modules')
-
-    subject_dir = os.path.join('video_ids', subject)
-
+def process_modules(url, dest_dir):
     for m_i, m in enumerate(get_modules(url)):
         module_title = '%d %s' % (m_i, m['title'])
         print('Processing ' + module_title)
 
-        module_dir = os.path.join(subject_dir, module_title)
+        module_dir = os.path.join(dest_dir, module_title)
 
         if os.path.exists(module_dir):
             print('\tSkipping ' + module_dir)
@@ -183,6 +173,18 @@ def main():
         commit_hierarchy(hierarchy)
 
         print('\tSaved ' + module_title)
+
+
+def main():
+    """
+    Download tutorials of every content in every module
+    eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
+    """
+    subject = 'Linear Algebra'
+    url = 'https://www.khanacademy.org/math/linear-algebra'
+    print('Getting modules')
+    subject_dir = os.path.join('video_ids', subject)
+    process_modules(url, subject_dir)
 
 
 if __name__ == '__main__':
