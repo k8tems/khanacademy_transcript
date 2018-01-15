@@ -136,7 +136,8 @@ def resolve_indices(hierarchy):
     """
     for i, h in enumerate(hierarchy):
         h['title'] = '%d %s' % (i, h['title'])
-        resolve_indices(h['children'])
+        if 'children' in h:
+            resolve_indices(h['children'])
     return hierarchy
 
 
