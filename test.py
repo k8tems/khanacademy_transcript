@@ -56,5 +56,23 @@ class TestFormatStart(unittest.TestCase):
         self.assertEqual('00:03', parse_transcripts.format_start(3.14159))
 
 
+class TestGenerateDirectories(unittest.TestCase):
+    def test_two(self):
+        inp =  [{
+           'children': [{
+               'title': 'foo',
+               'video_id': 'bar'}],
+           'title': 'baz'}, {
+           'children': [{
+               'title': 'qux',
+               'video_id': 'quux'}],
+           'title': 'corge'}]
+        expected = [
+            {'path': 'baz/foo', 'title': 'bar'},
+            {'path': 'qux/quux', 'title': 'corge'},
+        ]
+        self.assertEqual(expected, list(download_video_ids.generate_directories(inp)))
+
+
 if __name__ == '__main__':
     unittest.main()
