@@ -16,4 +16,5 @@ requests
 TODO
 - [x] Refactor `parse_transcripts.py`
 - [x] Abstract file containing video ids
+- [ ] Save video ids using directory hierarchy
 - [ ] Auto detect subject(e.g. Math => Linear Algebra, Calculus ...)
