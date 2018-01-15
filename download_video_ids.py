@@ -141,9 +141,10 @@ def main():
     subject_dir = os.path.join('video_ids', subject)
 
     for m in get_modules(url):
-        print('Processing ' + m['title'])
+        module_title = m['title']
+        print('Processing ' + module_title)
 
-        module_dir = os.path.join(subject_dir, m['title'])
+        module_dir = os.path.join(subject_dir, module_title)
 
         if os.path.exists(module_dir):
             print('\tSkipping ' + module_dir)
@@ -153,6 +154,8 @@ def main():
         hierarchy = convert_hierarchy(hierarchy)
         hierarchy = resolve_paths(hierarchy, module_dir)
         commit_hierarchy(hierarchy)
+
+        print('Saved ' + module_title)
 
 
 if __name__ == '__main__':
