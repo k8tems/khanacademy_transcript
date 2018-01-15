@@ -118,12 +118,25 @@ def commit_hierarchy(hierarchy):
 def resolve_paths(hierarchy, dest):
     """
     Resolve relative paths in hierarchy
-    :param hierarchy: hierarchy containing video ids
+    :param hierarchy: hierarchy containing video ids; mutated
     :param dest: Destination in file system to save hierarchy
     :return: hierarchy with resolved paths
     """
     for node in hierarchy:
         node['path'] = os.path.join(dest, node['path'])
+    return hierarchy
+
+
+def resolve_indices(hierarchy):
+    """
+    Prepend index of array element to title so that the order is
+    preserved after saving to the file system
+    :param hierarchy: hierarchy containing video ids; mutated
+    :return: hierarchy with resolved indices
+    """
+    for i, h in enumerate(hierarchy):
+        h['title'] = '%d %s' % (i, h['title'])
+        resolve_indices(h['children'])
     return hierarchy
 
 
@@ -149,6 +162,7 @@ def main():
             continue
 
         hierarchy = TutorialSpider.crawl(m['url'])
+        hierarchy = resolve_indices(hierarchy)
         hierarchy = list(convert_hierarchy(hierarchy))
         hierarchy = resolve_paths(hierarchy, module_dir)
         commit_hierarchy(hierarchy)
