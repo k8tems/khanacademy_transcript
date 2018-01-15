@@ -97,24 +97,36 @@ def save(title, modules):
     write_text(fname, json.dumps(modules))
 
 
-def convert_hierarchy(root):
+def convert_hierarchy(hierarchy):
     """Convert dict hierarchy to directory hierarchy"""
-    for c in root:
+    for c in hierarchy:
         for gc in c['children']:
             yield {'path': os.path.join(c['title'], gc['title']), 'video_id': gc['video_id']}
 
 
-def commit_hierarchy(directories):
+def commit_hierarchy(hierarchy):
     """
     Commit hierarchy to file system
-    :param directories: hierarchy to commit
+    :param hierarchy: hierarchy to commit
     :param dest: directory in file system to commit to
     """
-    for node in directories:
+    for node in hierarchy:
         fname = os.path.join(node['path'], node['video_id'])
         create_dir(os.path.dirname(fname))
         content = 'video_id'
         write_text(fname, content)
+
+
+def resolve_paths(hierarchy, dest):
+    """
+    Resolve relative paths in hierarchy
+    :param hierarchy: hierarchy containing video ids
+    :param dest: Destination in file system to save hierarchy
+    :return: hierarchy with resolved paths
+    """
+    for node in hierarchy:
+        node['path'] = os.path.join(dest, node['path'])
+    return hierarchy
 
 
 def main():
@@ -137,10 +149,10 @@ def main():
             print('\tSkipping ' + module_dir)
             continue
 
-        converted = list(convert_hierarchy(TutorialSpider.crawl(m['url'])))
-        for c in converted:
-            c['path'] = os.path.join(module_dir, c['path'])
-        commit_hierarchy(converted)
+        hierarchy = TutorialSpider.crawl(m['url'])
+        hierarchy = convert_hierarchy(hierarchy)
+        hierarchy = resolve_paths(hierarchy, module_dir)
+        commit_hierarchy(hierarchy)
 
 
 if __name__ == '__main__':
