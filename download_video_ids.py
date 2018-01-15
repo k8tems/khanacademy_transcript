@@ -97,10 +97,11 @@ def save(title, modules):
     write_text(fname, json.dumps(modules))
 
 
-def generate_directories(input):
+def generate_directories(root):
     """Convert dict hierarchy to directory hierarchy"""
-    for i in input:
-        pass
+    for c in root:
+        for gc in c['children']:
+            yield {'path': os.path.join(c['title'], gc['title']), 'video_id': gc['video_id']}
 
 
 def main():
