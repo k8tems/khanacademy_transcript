@@ -129,6 +129,11 @@ def main():
     modules = get_modules(url)
     for m in modules:
         print('Processing ' + m['title'])
+
+        if os.path.exists(os.path.join('video_ids', subject)):
+            print('\tSkipping ' + m['title'])
+            continue
+
         generated = list(generate_directories(TutorialSpider.crawl(m['url'])))
         for g in generated:
             g['path'] = os.path.join(subject, m['title'], g['path'])
