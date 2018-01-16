@@ -1,8 +1,8 @@
 import os
 import re
+import sys
 import json
 import requests
-from pprint import pprint
 from file import write_text, create_dir
 
 
@@ -180,8 +180,8 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    url = 'https://www.khanacademy.org/math/statistics-probability'
-    module_title = 'Statistics and probability'
+    module_title = sys.argv[1]
+    url = sys.argv[2]
     print('Processing ' + module_title)
     subject_dir = os.path.join('video_ids', module_title)
     process_modules(url, subject_dir)
