@@ -190,11 +190,10 @@ def main():
     args = get_args()
 
     module_title = args.module
-    url = args.url
 
     print('Processing ' + module_title)
     subject_dir = os.path.join('video_ids', module_title)
-    process_modules(url, subject_dir)
+    process_modules(args.url, subject_dir)
 
 
 if __name__ == '__main__':
