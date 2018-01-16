@@ -180,8 +180,8 @@ def main():
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    url = 'https://www.khanacademy.org/math/statistics-probability/probability-library'
-    module_title = 'statistics-probability/probability-library'
+    url = 'https://www.khanacademy.org/math/statistics-probability'
+    module_title = 'Statistics and probability'
     print('Processing ' + module_title)
     subject_dir = os.path.join('video_ids', module_title)
     process_modules(url, subject_dir)
