@@ -18,4 +18,4 @@ TODO
 - [x] Abstract file containing video ids
 - [x] Save video ids using directory hierarchy
 - [x] Auto detect subject(e.g. Math => Linear Algebra, Calculus ...)
-- [ ] Only download necessary tutorials
+- [x] Only download necessary tutorials
