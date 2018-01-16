@@ -1,9 +1,9 @@
 import os
 import re
-import sys
 import json
 import requests
 from file import write_text, create_dir
+import argparse
 
 
 def download(url):
@@ -175,13 +175,23 @@ def process_modules(url, dest_dir):
         print('\tSaved ' + module_title)
 
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('module')
+    parser.add_argument('url')
+    return parser.parse_args()
+
+
 def main():
     """
     Download tutorials of every content in every module
     eg) Vectors and spaces(module) => Vectors(content) => Vector intro for linear algebra(tutorial)
     """
-    module_title = sys.argv[1]
-    url = sys.argv[2]
+    args = get_args()
+
+    module_title = args.module
+    url = args.url
+
     print('Processing ' + module_title)
     subject_dir = os.path.join('video_ids', module_title)
     process_modules(url, subject_dir)
