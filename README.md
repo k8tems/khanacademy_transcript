@@ -3,7 +3,7 @@ Quick and dirty script suite for curating khanacademy video transcripts
 
 Usage
 ```
-MODULE="Differential Calculus"
+MODULE="Early math"
 URL="https://www.khanacademy.org/math/early-math"
 python download_video_ids.py "${MODULE}" "${URL}"
 python download_transcripts.py
